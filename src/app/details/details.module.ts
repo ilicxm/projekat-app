@@ -2,10 +2,12 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab1Page } from '../tab1/tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 import { DetailsPageRoutingModule } from './details-routing.module';
-import { DetailsPage } from './details.page'; // Ispravljena putanja
+import { DetailsPage } from './details.page';
+
+import { CakeDetailsComponent } from '../cake-details/cake-details.component'; // Uvezite CakeDetailsComponent ovde
+
 
 @NgModule({
   imports: [
@@ -13,9 +15,8 @@ import { DetailsPage } from './details.page'; // Ispravljena putanja
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    DetailsPageRoutingModule, // Dodajemo ruting modul ako postoji
+    DetailsPageRoutingModule,
   ],
-  declarations: [DetailsPage]
+  declarations: [DetailsPage, CakeDetailsComponent]
 })
-export class DetailsModule {} // Ispravljen naziv modula
-
+export class DetailsPageModule {}
