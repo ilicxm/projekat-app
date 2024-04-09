@@ -1,0 +1,41 @@
+
+ion-content {
+  --ion-background-color: #ffddb3; /* Pastelno narandžasta boja */
+  --ion-color-base: #4d4d4d; /* Tamnija nežna nijansa za font */
+  --ion-text-color: #4d4d4d; /* Tamnija nežna nijansa za tekst */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Prilagodite font prema vašim preferencijama */
+}
+
+ion-avatar img {
+  width: 100%; /* Postavlja širinu slike na 100% */
+  height: auto; /* Automatsko prilagođavanje visine */
+  margin: 0; /* Uklanja bilo kakve margine */
+  padding: 0; /* Uklanja bilo kakve paddinge */
+  object-fit: cover;
+}
+
+/* Stilizacija teksta u headeru */
+ion-toolbar ion-title {
+  color: #506426; /* Boja teksta */
+  font-size: 30px;
+  font-weight: bold; /* Debljina fonta */
+  text-align: center; /* Centriranje teksta */
+}
+
+
+
+/* Stilizacija slike u headeru */
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Postavljanje pozadine iza sadržaja */
+}
+
+.header-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Održava omjer širine i visine */
+}
