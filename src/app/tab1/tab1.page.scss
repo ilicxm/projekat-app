@@ -1,0 +1,93 @@
+/* Stilizacija pozadine i fonta */
+ion-content {
+  --ion-background-color: #ffddb3; /* Pastelno narandžasta boja */
+  --ion-color-base: #4d4d4d; /* Tamnija nežna nijansa za font */
+  --ion-text-color: #4d4d4d; /* Tamnija nežna nijansa za tekst */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Prilagodite font prema vašim preferencijama */
+}
+
+/* Stilizacija zaobljenih ivica za kartice */
+ion-card {
+  border-radius: 15px; /* Prilagodite vrijednost radi željenog izgleda */
+  --background: #ffb366; /* Pastelno narandžasta boja za pozadinu kartice */
+  --color: #4d4d4d; /* Tamnija nežna nijansa za tekst na kartici */
+  text-align: center; /* Centriranje teksta unutar card containera */
+}
+
+/* Stilizacija zaobljenih ivica za slike unutar kartica */
+ion-thumbnail img {
+  border-radius: 15px; /* Prilagodite vrijednost radi željenog izgleda */
+}
+
+/* Stilizacija zaobljenih ivica za iteme unutar liste */
+ion-item {
+  --background: #ffddb3; /* Postavljanje pozadinske boje item containera */
+  border-radius: 15px; /* Prilagodite vrijednost radi željenog izgleda */
+  color: #4d4d4d; /* Boja teksta itema */
+
+  --inner-border-width: 0;
+}
+
+/* Stilizacija boje dugmeta */
+ion-button {
+  --color: #fff; /* Boja teksta na dugmetu */
+  --background: #ff704d; /* Tamnija pastelno narandžasta boja za pozadinu dugmeta */
+  --border-radius: 10px; /* Zaobljenje ivica dugmeta */
+}
+
+/* Stilizacija zaobljenih ivica za sliku unutar itema */
+ion-item ion-thumbnail img {
+  border-radius: 15px; /* Prilagodite vrijednost radi željenog izgleda */
+}
+
+/* Stilizacija slike u headeru */
+ion-avatar img {
+  width: 100%; /* Postavlja širinu slike na 100% */
+  height: auto; /* Automatsko prilagođavanje visine */
+  margin: 0; /* Uklanja bilo kakve margine */
+  padding: 0; /* Uklanja bilo kakve paddinge */
+  object-fit: cover;
+}
+
+/* Stilizacija teksta u headeru */
+ion-toolbar ion-title {
+  color: #506426; /* Boja teksta */
+  font-size: 30px;
+  font-weight: bold; /* Debljina fonta */
+  text-align: center; /* Centriranje teksta */
+}
+
+ion-list {
+  background-color: #ffddb3; /* Postavljanje pozadinske boje ion-list */
+}
+
+ion-card-title{
+  font-weight: bold; /* Debljina fonta */
+  font-size: 20px; /* Veličina fonta */
+  color: #bd4224; /* Jarke boje koja se uklapa uz dizajn */
+}
+
+ion-card-subtitle {
+  font-size: 18px; /* Veličina fonta */
+  font-weight: normal;
+  color: #bd4224; /* Jarke boje koja se uklapa uz dizajn */
+}
+
+/* Stilizacija slike u headeru */
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Postavljanje pozadine iza sadržaja */
+}
+
+.header-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Održava omjer širine i visine */
+}
+
+
+
