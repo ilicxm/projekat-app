@@ -24,3 +24,5 @@ describe('Tab2Page', () => {
     expect(component).toBeTruthy();
   });
 });
+
+

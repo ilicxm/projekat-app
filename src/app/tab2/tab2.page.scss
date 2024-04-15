@@ -47,4 +47,90 @@ ion-searchbar{
 }
 
 
+.backbtn {
+  margin-left: 15px;
+}
 
+.notification {
+  margin-right: 15px;
+}
+
+ion-content {
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  --padding-start: 26px;
+  --padding-end: 26px;
+}
+
+.title {
+  margin-top: 0;
+  color: #434343;
+}
+
+.order-items ion-card {
+  margin-left: 0;
+  margin-right: 0;
+  border-radius: 0;
+  margin-bottom: 16px; /* Dodatni prostor između kartica */
+
+  ion-card-content {
+    display: flex;
+    position: relative;
+    flex-direction: column; /* Stavljanje elemenata jedan ispod drugog */
+
+    .item-img {
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Centriranje slike */
+      margin-bottom: 16px;
+
+      img {
+        object-fit: cover;
+        max-width: 100%; /* Slika će zauzimati maksimalno dostupan prostor */
+        height: auto;
+        box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.16);
+      }
+    }
+
+    .item-info {
+      flex-grow: 1; /* Omogućava rastezanje ovog dela kako bi se dugmad smestila na dno */
+
+      p {
+        font-size: 16px;
+        margin: 0; /* Uklanja unutrašnje margine */
+        text-align: center; /* Centralizacija teksta */
+      }
+
+      .main-button {
+        --border-radius: 5px;
+        background-color: #ff69b4; /* Roze boja */
+        color: white;
+        margin: 0 auto; /* Centriranje dugmeta */
+        align-self: center; /* Centriranje dugmeta */
+        max-width: 120px; /* Postavljanje maksimalne širine dugmeta */
+      }
+
+      .main-button::after {
+        box-shadow: none !important;
+      }
+    }
+  }
+}
+
+.notification-popup {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: white;
+  padding: 16px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  font-size: 14px;
+  color: #434343;
+  display: none; /* Početno sakrivanje */
+}
+
+.notification-popup.show {
+  display: block; /* Prikazivanje kada je potrebno */
+}

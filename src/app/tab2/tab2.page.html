@@ -15,12 +15,176 @@
 
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Order</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Order"></app-explore-container>
+
+
+
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" class="backbtn" routerLink="/home" routerDirection="back">
+        
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button class="notification" (click)="showNotification()">
+        <ion-icon name="notifications-outline" color="dark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="notification-popup" [ngClass]="{ 'show': showNotificationPopup }">
+    Action: Strawberry Cake!
+  </div>
+
+
+  <h1 class="title">Order: </h1>
+
+  <div class="order-items">
+    <ion-card mode="ios">
+      <ion-card-content>
+        <div class="item-img">
+          <img src='../../assets/Image/guglTorta.jpeg' />
+        </div>
+
+        <div class="item-info">
+          <p>Choco Loco</p>
+          <p>Choco cake</p>
+          <p>$34.00</p>
+
+          <ion-button expand="block"  class="main-button" style="--background: #ff69b4; color: white;">Order</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card mode="ios">
+      <ion-card-content>
+        <div class="item-img">
+          <img src='../../assets/Image/images.jpeg' />
+        </div>
+
+        <div class="item-info">
+          <p>Strawberry Shortcake</p>
+          <p>Cake with whipped cream, and juicy strawberries</p>
+          <p>$16.99</p>
+
+          <ion-button expand="block"  class="main-button" style="--background: #ff69b4; color: white;">Order</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card mode="ios">
+      <ion-card-content>
+        <div class="item-img">
+          <img src='../../assets/Image/torta3.jpeg' />
+        </div>
+
+        <div class="item-info">
+          <p>Dream cake</p>
+          <p>Cake with unicorn decorations</p>
+          <p>$20.00</p>
+
+          <ion-button expand="block"  class="main-button" style="--background: #ff69b4; color: white;">Order</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card mode="ios">
+      <ion-card-content>
+        <div class="item-img">
+          <img src='../../assets/Image/Kuki1.jpeg' />
+        </div>
+
+        <div class="item-info">
+          <p>Chips Ahoy</p>
+          <p>Classic cookie</p>
+          <p>$2.30</p>
+
+          <ion-button expand="block"  class="main-button" style="--background: #ff69b4; color: white;">Order</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card mode="ios">
+      <ion-card-content>
+        <div class="item-img">
+          <img src='../../assets/Image/Kuki2.jpeg' />
+        </div>
+
+        <div class="item-info">
+          <p>Oreo</p>
+          <p>Oreo cookie</p>
+          <p>$1.90</p>
+
+          <ion-button expand="block"  class="main-button" style="--background: #ff69b4; color: white;">Order</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card mode="ios">
+      <ion-card-content>
+        <div class="item-img">
+          <img src='../../assets/Image/Kuki3.jpeg' />
+        </div>
+
+        <div class="item-info">
+          <p>Sprinkles</p>
+          <p>Colorful treats</p>
+          <p>$2.80</p>
+
+          <ion-button expand="block"  class="main-button" style="--background: #ff69b4; color: white;">Order</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card mode="ios">
+      <ion-card-content>
+        <div class="item-img">
+          <img src='../../assets/Image/Mafin1.jpeg' />
+        </div>
+
+        <div class="item-info">
+          <p>Chocoloney</p>
+          <p>Choco muffin</p>
+          <p>$4.50</p>
+
+          <ion-button expand="block"  class="main-button" style="--background: #ff69b4; color: white;">Order</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card mode="ios">
+      <ion-card-content>
+        <div class="item-img">
+          <img src='../../assets/Image/Mafin2.jpeg' />
+        </div>
+
+        <div class="item-info">
+          <p>Pistaccio Cream</p>
+          <p>Pistaccion muffin</p>
+          <p>$6.00</p>
+
+          <ion-button expand="block"  class="main-button" style="--background: #ff69b4; color: white;">Order</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card mode="ios">
+      <ion-card-content>
+        <div class="item-img">
+          <img src='../../assets/Image/Mafin3.jpeg' />
+        </div>
+
+        <div class="item-info">
+          <p>Blueberry Bash</p>
+          <p>Blueberry muffin</p>
+          <p>$2.90</p>
+
+          <ion-button expand="block"  class="main-button" style="--background: #ff69b4; color: white;">Order</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+
 </ion-content>
+
+
