@@ -1,0 +1,37 @@
+<ion-content>
+
+
+  <h1 class="title">Cart</h1>
+  <div class="cart-items">
+    <ion-card mode="ios" *ngFor="let item of cartItems">
+      <ion-card-content>
+        <div class="item-img">
+          <img [src]="item.image" />
+        </div>
+
+        <div class="item-info">
+          <p>{{ item.name }}</p>
+          <p>{{ item.description }}</p>
+          <p>{{ item.price }}</p>
+
+          <div class="qty-selector">
+            <ion-button fill="clear" (click)="decreaseQuantity(item)">-</ion-button>
+            <ion-label>{{ item.quantity }}</ion-label>
+            <ion-button fill="clear" (click)="increaseQuantity(item)">+</ion-button>
+          </div>
+          <ion-button fill="clear" color="danger" (click)="removeFromCart(item)">Remove</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="total-price">
+    <p>Total Price: {{ getTotalPrice() }}</p>
+  </div>
+
+</ion-content>
+<ion-footer class="custom-footer">
+  <ion-toolbar>
+    <ion-button (click)="navigateToTab2()" expand="block">Shop more</ion-button>
+  </ion-toolbar>
+</ion-footer>

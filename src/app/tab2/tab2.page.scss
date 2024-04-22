@@ -134,3 +134,12 @@ ion-content {
 .notification-popup.show {
   display: block; /* Prikazivanje kada je potrebno */
 }
+
+.main-button {
+  --background: #ff69b4; /* Promenite ovu vrednost u željenu boju */
+  --color: white; /* Boja teksta */
+  --border-radius: 5px;
+  max-width: 120px; /* Maksimalna širina dugmeta */
+  margin: 0 auto; /* Centriranje dugmeta */
+  align-self: center; /* Centriranje dugmeta */
+}

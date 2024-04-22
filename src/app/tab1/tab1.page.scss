@@ -1,11 +1,21 @@
 /* Stilizacija pozadine i fonta */
 ion-content {
-  --ion-background-color: #ffddb3; /* Pastelno narandžasta boja */
-  --ion-color-base: #4d4d4d; /* Tamnija nežna nijansa za font */
-  --ion-text-color: #4d4d4d; /* Tamnija nežna nijansa za tekst */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Prilagodite font prema vašim preferencijama */
+  --ion-background-color: #ffddb3;
+  --ion-color-base: #4d4d4d;
+  --ion-text-color: #4d4d4d;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.custom-footer {
+  height: 50px;
+}
+
+ion-button {
+  font-size: 16px; /* Prilagodite veličinu fonta po želji */
+  padding-top: 8px; /* Prilagodite gornji padding po želji */
+  padding-bottom: 8px; /* Prilagodite donji padding po želji */
+  --ion-color-primary: #bd4224; /* Promenite primarnu boju dugmeta */
+}
 /* Stilizacija zaobljenih ivica za kartice */
 ion-card {
   border-radius: 15px; /* Prilagodite vrijednost radi željenog izgleda */
@@ -29,11 +39,6 @@ ion-item {
 }
 
 /* Stilizacija boje dugmeta */
-ion-button {
-  --color: #fff; /* Boja teksta na dugmetu */
-  --background: #ff704d; /* Tamnija pastelno narandžasta boja za pozadinu dugmeta */
-  --border-radius: 10px; /* Zaobljenje ivica dugmeta */
-}
 
 /* Stilizacija zaobljenih ivica za sliku unutar itema */
 ion-item ion-thumbnail img {
@@ -88,6 +93,8 @@ ion-card-subtitle {
   height: 100%;
   object-fit: cover; /* Održava omjer širine i visine */
 }
+
+
 
 
 
