@@ -47,6 +47,10 @@ export class MyCartPage {
   navigateToTab2() {
     this.router.navigateByUrl('/tabs/tab2');
   }
+  navigateToCheckout() {
+    // Navigacija na Checkout stranicu
+    this.router.navigate(['/checkout'], { queryParams: { cartItems: JSON.stringify(this.cartItems) } });
+  }
   getTotalPrice(): number {
     return this.cartItems.reduce((total, item) => {
       return total + (parseFloat(item.price.replace('$', '')) * item.quantity);

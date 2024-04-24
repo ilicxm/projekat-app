@@ -7,7 +7,9 @@
       Order
     </ion-title>
   </ion-toolbar>
-  <ion-searchbar color="light" placeholder="Search"></ion-searchbar>
+  <ion-searchbar color="light" placeholder="Search" (ionChange)="filterProducts($event.detail?.value || '')"></ion-searchbar>
+
+
 </ion-header>
 
 <ion-content>
@@ -18,7 +20,7 @@
   <h1 class="title">Order: </h1>
 
   <div class="order-items">
-    <ion-card *ngFor="let product of products" mode="ios">
+    <ion-card *ngFor="let product of filteredProducts" mode="ios">
       <ion-card-content>
         <div class="item-img">
           <img [src]="product.image" />

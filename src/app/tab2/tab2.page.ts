@@ -19,69 +19,87 @@ export class Tab2Page {
 
   showNotificationPopup = false;
 
+  products: Product[] = []; // Array to hold all products
+  filteredProducts: Product[] = []; // Array to hold filtered products
+  cartItems: Product[] = [];
 
-  products: Product[] = [
-    {
-      name: 'Choco Loco',
-      description: 'Choco cake',
-      price: '$34.00',
-      image: '../../assets/Image/guglTorta.jpeg',
-      quantity: 1
-    },
-    {
-      name: 'Strawberry Shortcake',
-      description: 'Cake with strawberries',
-      price: '$16.99',
-      image: '../../assets/Image/images.jpeg',
-      quantity: 1
-    },
-    {
-      name: 'Unicorn cake',
-      description: 'Cake with unicorn',
-      price: '$23.99',
-      image: '../../assets/Image/torta3.jpeg',
-      quantity: 1
-    },
-    {
-      name: 'Chips Ahoy',
-      description: 'Classic cookie',
-      price: '$2.30',
-      image: '../../assets/Image/Kuki1.jpeg',
-      quantity: 1
-    },
-    {name: 'Oreo', description: 'Oreo cookie', price: '$1.90', image: '../../assets/Image/Kuki2.jpeg', quantity: 1},
-    {
-      name: 'Sprinkles',
-      description: 'Colorful treats',
-      price: '$2.80',
-      image: '../../assets/Image/Kuki3.jpeg',
-      quantity: 1
-    },
-    {
-      name: 'Chocoloney',
-      description: 'Choco muffin',
-      price: '$4.50',
-      image: '../../assets/Image/Mafin1.jpeg',
-      quantity: 1
-    },
-    {
-      name: 'Pistaccio Cream',
-      description: 'Pistaccio muffin',
-      price: '$6.00',
-      image: '../../assets/Image/Mafin2.jpeg',
-      quantity: 1
-    },
-    {
-      name: 'Blueberry Bash',
-      description: 'Blueberry muffin',
-      price: '$2.90',
-      image: '../../assets/Image/Mafin3.jpeg',
-      quantity: 1
+  constructor(private router: Router) {
+    this.products = [
+      {
+        name: 'Choco Loco',
+        description: 'Choco cake',
+        price: '$34.00',
+        image: '../../assets/Image/guglTorta.jpeg',
+        quantity: 1
+      },
+      {
+        name: 'Strawberry Shortcake',
+        description: 'Cake with strawberries',
+        price: '$16.99',
+        image: '../../assets/Image/images.jpeg',
+        quantity: 1
+      },
+      {
+        name: 'Unicorn cake',
+        description: 'Cake with unicorn',
+        price: '$23.99',
+        image: '../../assets/Image/torta3.jpeg',
+        quantity: 1
+      },
+      {
+        name: 'Chips Ahoy',
+        description: 'Classic cookie',
+        price: '$2.30',
+        image: '../../assets/Image/Kuki1.jpeg',
+        quantity: 1
+      },
+      {name: 'Oreo', description: 'Oreo cookie', price: '$1.90', image: '../../assets/Image/Kuki2.jpeg', quantity: 1},
+      {
+        name: 'Sprinkles',
+        description: 'Colorful treats',
+        price: '$2.80',
+        image: '../../assets/Image/Kuki3.jpeg',
+        quantity: 1
+      },
+      {
+        name: 'Chocoloney',
+        description: 'Choco muffin',
+        price: '$4.50',
+        image: '../../assets/Image/Mafin1.jpeg',
+        quantity: 1
+      },
+      {
+        name: 'Pistaccio Cream',
+        description: 'Pistaccio muffin',
+        price: '$6.00',
+        image: '../../assets/Image/Mafin2.jpeg',
+        quantity: 1
+      },
+      {
+        name: 'Blueberry Bash',
+        description: 'Blueberry muffin',
+        price: '$2.90',
+        image: '../../assets/Image/Mafin3.jpeg',
+        quantity: 1
+      }
+
+    ];
+
+    this.filteredProducts = this.products;
+  }
+  filterProducts(searchTerm: string) {
+    // If search term is empty, display all products
+    if (!searchTerm.trim()) {
+      this.filteredProducts = this.products;
+      return;
     }
 
-  ]; // Promenjeno na CartItem[] umesto any[]
-
-  cartItems: Product[] = [];
+    // Filter products based on search term
+    this.filteredProducts = this.products.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
 
 
 
@@ -92,9 +110,9 @@ export class Tab2Page {
     }, 3000); // Prikazuje se 3 sekunde, nakon toga nestaje
   }
 
-  // Funkcija za dodavanje proizvoda u korpu
 
-  constructor(private router: Router) {}
+
+
 
   addToCart(product: Product) {
     const existingItem = this.cartItems.find(item => item.name === product.name);

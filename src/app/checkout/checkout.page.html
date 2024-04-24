@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+
+
+    <ion-buttons slot="end">
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <h1 class="title">Cart</h1>
+  <div class="cart-items">
+    <ion-card mode="ios" *ngFor="let item of cartItems">
+      <ion-card-content>
+        <div class="item-img">
+          <img [src]="item.image" />
+        </div>
+
+        <div class="item-info">
+          <p>{{ item.name }}</p>
+          <p>{{ item.description }}</p>
+          <p>{{ item.price }}</p>
+
+          <div class="qty-selector">
+            <ion-button fill="clear" (click)="decreaseQuantity(item)">-</ion-button>
+            <ion-label>{{ item.quantity }}</ion-label>
+            <ion-button fill="clear" (click)="increaseQuantity(item)">+</ion-button>
+          </div>
+          <ion-button fill="clear" color="danger" (click)="removeFromCart(item)">Remove</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="total-price">
+    <p>Total Price: {{ getTotalPrice() }}</p>
+  </div>
+
+  <!-- New form fields -->
+  <ion-item>
+    <ion-label>Name</ion-label>
+    <ion-input type="text" [(ngModel)]="customer.name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Surname</ion-label>
+    <ion-input type="text" [(ngModel)]="customer.surname"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Address</ion-label>
+    <ion-input type="text" [(ngModel)]="customer.address"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Email</ion-label>
+    <ion-input type="email" [(ngModel)]="customer.email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Phone Number</ion-label>
+    <ion-input type="tel" [(ngModel)]="customer.phone"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Date of Delivery</ion-label>
+    <ion-datetime display-format="DD MMM YYYY" [(ngModel)]="deliveryDate"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>Payment Method</ion-label>
+    <ion-select [(ngModel)]="paymentMethod">
+      <ion-select-option value="invoice">Invoice</ion-select-option>
+      <ion-select-option value="cash">Cash on Delivery</ion-select-option>
+      <ion-select-option value="creditcard">Credit Card</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+
+  <ion-item *ngIf="paymentMethod === 'creditcard'">
+    <ion-label>Credit Card Number</ion-label>
+    <ion-input type="text" [(ngModel)]="creditCard.number"></ion-input>
+  </ion-item>
+  <ion-item *ngIf="paymentMethod === 'creditcard'">
+    <ion-label>CVC</ion-label>
+    <ion-input type="text" [(ngModel)]="creditCard.cvc"></ion-input>
+  </ion-item>
+  <ion-item *ngIf="paymentMethod === 'creditcard'">
+    <ion-label>Cardholder's Name</ion-label>
+    <ion-input type="text" [(ngModel)]="creditCard.cardholderName"></ion-input>
+  </ion-item>
+  <ion-item *ngIf="paymentMethod === 'creditcard'">
+    <ion-label>Expiry Date</ion-label>
+    <ion-input type="text" [(ngModel)]="creditCard.expiryDate"></ion-input>
+  </ion-item>
+
+</ion-content>
+<ion-footer class="custom-footer">
+  <ion-toolbar>
+    <ion-button (click)="navigateToTab2()" expand="block">Shop more</ion-button>
+  </ion-toolbar>
+</ion-footer>
+<ion-footer translucent="true" class="ion-no-border" mode="md">
+  <ion-toolbar color="translucent">
+    <ion-button expand="block" class="main-button" routerLink="/confirm" routerDirection="forward">Buy</ion-button>
+  </ion-toolbar>
+</ion-footer>
