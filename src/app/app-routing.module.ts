@@ -10,6 +10,7 @@ const routes: Routes = [
     path: 'details',
     loadChildren: () => import('./details/details.module').then( m => m.DetailsPageModule)
   },
+
   {
     path: 'my-cart',
     loadChildren: () => import('./my-cart/my-cart.module').then(m => m.MyCartPageModule)
@@ -17,7 +18,8 @@ const routes: Routes = [
   {
     path: 'checkout',
     loadChildren:()=> import('./checkout/checkout.module').then(m=>m.CheckoutPageModule)
-  }
+  },
+
 
 ];
 @NgModule({
