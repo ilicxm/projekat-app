@@ -1,18 +1,19 @@
+// app.module.ts
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular'; // Uvoz IonicRouteStrategy
 import { RouteReuseStrategy } from '@angular/router';
-
-
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { InitialPageComponent } from './initial-page/initial-page.component'; // Uvoz InitialPageComponent
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, InitialPageComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }], // Koristimo IonicRouteStrategy
   bootstrap: [AppComponent],
-
 })
 export class AppModule {}
+
