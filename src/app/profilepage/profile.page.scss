@@ -1,52 +1,93 @@
+// tabs.page.scss
+
 .backbtn {
   margin-left: 15px;
+  color: #000000; // Crna boja
 }
 
-.notification {
-  margin-right: 15px;
-}
-.profile-picture-frame {
-  width: 120px; /* Adjust the size as needed */
-  height: 120px; /* Adjust the size as needed */
-  border: 2px solid #ccc;
+.profile-picture-frame{
+  width: 120px;
+  height: 120px;
+  border: 2px solid #ff6600; // Svetlonarandžasta boja
   border-radius: 50%;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto; // Centriranje na sredini
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
 }
 
-.profile-picture-frame img {
-  max-width: 100%;
-  max-height: 100%;
-}
+
+
 
 ion-content {
+  --ion-background-color:  #ffddb3; // Bez boje pozadine
+  --ion-color-base: #4d4d4d; // Tamno siva boja teksta
+  --ion-text-color: #4d4d4d; // Tamno siva boja teksta
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --padding-top: 16px;
   --padding-bottom: 16px;
   --padding-start: 26px;
   --padding-end: 26px;
 }
 
-.title {
-  margin-top: 0;
-  color: #434343;
+ion-toolbar ion-title{
+  color: #506426; /* Boja teksta */
+  font-size: 30px;
+  font-weight: bold; /* Debljina fonta */
+  text-align: center; /* Centriranje teksta */
 }
 
-.profile-info {
-  padding-top: 20px;
+ion-item {
+  --background: #ffddb3; /* Postavljanje pozadinske boje item containera */
+  border-radius: 15px; /* Prilagodite vrijednost radi željenog izgleda */
+  color: #4d4d4d; /* Boja teksta itema */
 
-  ion-item {
-    --padding-start: 0;
-    --border-color: #97979713;
+  --inner-border-width: 0;
+}
 
-    ion-label {
-      color: #919191;
-      font-size: larger;
-    }
+ion-label {
+  color: #333; // Tamnija boja teksta
+  font-size: larger;
+}
 
-    ion-input {
-      --color: #434343;
+ion-input {
+  --color: #ff8e38; // Narandžasta boja
+}
+
+ion-footer {
+  ion-toolbar {
+    --background: #ff6600; // Svetlonarandžasta boja
+    --color: #fff; // Bela boja teksta
+
+    ion-button {
+      font-size: 16px; /* Prilagodite veličinu fonta po želji */
+      padding-top: 8px; /* Prilagodite gornji padding po želji */
+      padding-bottom: 8px; /* Prilagodite donji padding po želji */
+      --ion-color-primary: #bd4224; // Svetlonarandžasta boja
     }
   }
 }
+
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.header-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+

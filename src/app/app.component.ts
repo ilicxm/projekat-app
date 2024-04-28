@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
   constructor(private router: Router) {
     setTimeout(() => {
-      this.router.navigate(['/tabs']); //
+      this.router.navigate(['/tabs/tab1']); //
     }, 3000); // Promenite vreme (u milisekundama) prema potrebi
   }
 }

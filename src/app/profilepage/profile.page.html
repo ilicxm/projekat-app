@@ -1,21 +1,23 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
+    <div class="header-background">
+      <img src="assets/Image/orange2.jpg" alt="Header Background Image">
+    </div>
     <ion-buttons slot="start">
       <ion-button color="primary" class="backbtn" routerLink="/tabs/tab1" routerDirection="back">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Profile</ion-title>
-    <ion-buttons slot="end">
-      <ion-button class="notification">
-        <ion-icon name="notifications-outline" color="dark"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+
+    <ion-title>
+      Profile
+    </ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <h1 class="title">Profile</h1>
+
 
   <div class="profile-info">
     <!-- Profile Picture -->
@@ -23,7 +25,7 @@
       <div class="profile-picture-frame">
         <ion-img [src]="profile.picture" *ngIf="profile.picture"></ion-img>
       </div>
-      <ion-input type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!profile.picture || editMode"></ion-input>
+      <ion-input  type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!profile.picture || editMode"></ion-input>
     </div>
 
     <!-- Name, Address, City, Gender, Email, Phone Number -->
@@ -32,7 +34,7 @@
       <ion-input [(ngModel)]="profile.name" [disabled]="!editMode"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Address Lane</ion-label>
+      <ion-label position="floating">Address</ion-label>
       <ion-input [(ngModel)]="profile.address" [disabled]="!editMode"></ion-input>
     </ion-item>
     <ion-item>
@@ -40,8 +42,8 @@
       <ion-input [(ngModel)]="profile.city" [disabled]="!editMode"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Gender</ion-label>
-      <ion-input [(ngModel)]="profile.gender" [disabled]="!editMode"></ion-input>
+      <ion-label position="floating">Postal Code</ion-label>
+      <ion-input [(ngModel)]="profile.postal" [disabled]="!editMode"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Email</ion-label>
@@ -52,6 +54,7 @@
       <ion-input [(ngModel)]="profile.phoneNumber" [disabled]="!editMode"></ion-input>
     </ion-item>
   </div>
+
 </ion-content>
 
 <ion-footer>
