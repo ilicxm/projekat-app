@@ -14,12 +14,15 @@ ion-button {
   font-size: 16px; /* Prilagodite veličinu fonta po želji */
   padding-top: 8px; /* Prilagodite gornji padding po želji */
   padding-bottom: 8px; /* Prilagodite donji padding po želji */
-  --ion-color-primary: #bd4224; /* Promenite primarnu boju dugmeta */
+  --ion-color-primary: #ff8b38;
+  color: white;
+  text-transform: lowercase;
+
 }
 /* Stilizacija zaobljenih ivica za kartice */
 ion-card {
   border-radius: 15px; /* Prilagodite vrijednost radi željenog izgleda */
-  --background: #ffb366; /* Pastelno narandžasta boja za pozadinu kartice */
+  --background: #ff8b38; /* Pastelno narandžasta boja za pozadinu kartice */
   --color: #4d4d4d; /* Tamnija nežna nijansa za tekst na kartici */
   text-align: center; /* Centriranje teksta unutar card containera */
 }
@@ -56,7 +59,7 @@ ion-avatar img {
 
 /* Stilizacija teksta u headeru */
 ion-toolbar ion-title {
-  color: #506426; /* Boja teksta */
+  color:  #ffffff; /* Boja teksta */
   font-size: 30px;
   font-weight: bold; /* Debljina fonta */
   text-align: center; /* Centriranje teksta */
@@ -69,13 +72,13 @@ ion-list {
 ion-card-title{
   font-weight: bold; /* Debljina fonta */
   font-size: 20px; /* Veličina fonta */
-  color: #bd4224; /* Jarke boje koja se uklapa uz dizajn */
+  color: #ffffff; /* Jarke boje koja se uklapa uz dizajn */
 }
 
 ion-card-subtitle {
   font-size: 18px; /* Veličina fonta */
   font-weight: normal;
-  color: #bd4224; /* Jarke boje koja se uklapa uz dizajn */
+  color:  #ffffff; /* Jarke boje koja se uklapa uz dizajn */
 }
 
 /* Stilizacija slike u headeru */

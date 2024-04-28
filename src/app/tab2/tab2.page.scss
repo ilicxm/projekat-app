@@ -1,8 +1,8 @@
 
 ion-content {
   --ion-background-color: #ffddb3; /* Pastelno narandžasta boja */
-  --ion-color-base: #4d4d4d; /* Tamnija nežna nijansa za font */
-  --ion-text-color: #4d4d4d; /* Tamnija nežna nijansa za tekst */
+  --ion-color-base: #ffddb3; /* Tamnija nežna nijansa za font */
+  --ion-text-color: #ffddb3; /* Tamnija nežna nijansa za tekst */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Prilagodite font prema vašim preferencijama */
 }
 
@@ -16,7 +16,7 @@ ion-avatar img {
 
 /* Stilizacija teksta u headeru */
 ion-toolbar ion-title {
-  color: #506426; /* Boja teksta */
+  color:  #ffffff; /* Boja teksta */
   font-size: 30px;
   font-weight: bold; /* Debljina fonta */
   text-align: center; /* Centriranje teksta */
@@ -40,26 +40,23 @@ ion-toolbar ion-title {
   object-fit: cover; /* Održava omjer širine i visine */
 }
 
-ion-searchbar{
-  background: white;
-  color: white;
-
+ion-searchbar {
+  --background: #ffffff; /* Boja pozadine pretrage */
+  --color: #ffddb3; /* Boja teksta */
+  --placeholder-color: #ffddb3; /* Boja placeholder teksta */
+  --icon-color: #ffddb3; /* Boja ikona pretrage */
 }
 
 
-.backbtn {
-  margin-left: 15px;
-}
 
-.notification {
-  margin-right: 15px;
-}
+
 
 ion-content {
   --padding-top: 16px;
   --padding-bottom: 16px;
   --padding-start: 26px;
   --padding-end: 26px;
+  color: white;
 }
 
 .title {
@@ -72,11 +69,13 @@ ion-content {
   margin-right: 0;
   border-radius: 0;
   margin-bottom: 16px; /* Dodatni prostor između kartica */
+  background-color: #ffddb3; /* Boja pozadine kartica */
 
   ion-card-content {
     display: flex;
     position: relative;
     flex-direction: column; /* Stavljanje elemenata jedan ispod drugog */
+    color: white;
 
     .item-img {
       display: flex;
@@ -94,28 +93,32 @@ ion-content {
 
     .item-info {
       flex-grow: 1; /* Omogućava rastezanje ovog dela kako bi se dugmad smestila na dno */
+      color: #4d4d4d; /* Boja teksta */
+      text-align: center; /* Centralizacija teksta */
 
       p {
         font-size: 16px;
         margin: 0; /* Uklanja unutrašnje margine */
-        text-align: center; /* Centralizacija teksta */
-      }
-
-      .main-button {
-        --border-radius: 5px;
-        background-color: #ff69b4; /* Roze boja */
-        color: white;
-        margin: 0 auto; /* Centriranje dugmeta */
-        align-self: center; /* Centriranje dugmeta */
-        max-width: 120px; /* Postavljanje maksimalne širine dugmeta */
-      }
-
-      .main-button::after {
-        box-shadow: none !important;
       }
     }
   }
 }
+
+
+
+
+
+ion-button.addbutton {
+  --background: #ff8b38; /* Boja pozadine dugmeta */
+  --color: white; /* Boja teksta na dugmetu */
+  --border-radius: 5px;
+  max-width: 120px; /* Maksimalna širina dugmeta */
+  margin: 0 auto; /* Centriranje dugmeta */
+  align-self: center; /* Centriranje dugmeta */
+  padding: 8px 16px; /* Dodavanje prostora između teksta i rubova dugmeta */
+  font-size: 14px; /* Veličina fonta */
+}
+
 
 .notification-popup {
   position: absolute;
@@ -136,7 +139,7 @@ ion-content {
 }
 
 .main-button {
-  --background: #ff69b4; /* Promenite ovu vrednost u željenu boju */
+  --background: #ff8b38; /* Promenite ovu vrednost u željenu boju */
   --color: white; /* Boja teksta */
   --border-radius: 5px;
   max-width: 120px; /* Maksimalna širina dugmeta */

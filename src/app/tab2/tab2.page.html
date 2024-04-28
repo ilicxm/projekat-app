@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <div class="header-background">
-      <img src="assets/Image/orange2.jpg" alt="Header Background Image">
+      <img src="assets/Image/aranci1.jpg" alt="Header Background Image">
     </div>
     <ion-title>
       Order
@@ -17,7 +17,6 @@
     Action: Strawberry Cake!
   </div>
 
-  <h1 class="title">Order: </h1>
 
   <div class="order-items">
     <ion-card *ngFor="let product of filteredProducts" mode="ios">
@@ -29,7 +28,7 @@
           <p>{{ product.name }}</p>
           <p>{{ product.description }}</p>
           <p>{{ product.price }}</p>
-          <ion-button expand="block" class="main-button" style="--background: #ff69b4; color: white;" (click)="addToCart(product)">Order</ion-button>
+          <ion-button expand="block" class="addbutton" (click)="addToCart(product)">Order</ion-button>
         </div>
       </ion-card-content>
     </ion-card>
