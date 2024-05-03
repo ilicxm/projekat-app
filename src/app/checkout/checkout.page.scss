@@ -15,7 +15,7 @@ ion-content {
 
 .title {
   margin-top: 0;
-  color: #434343;
+  color: #ffffff;
 }
 
 .cart-items {
@@ -46,12 +46,11 @@ ion-content {
           font-size: 16px;
         }
 
-        p:nth-child(1) {
-          color: #434343;
-        }
+        p:nth-child(1),
         p:nth-child(2) {
-          color: #919191;
+          color: #ffddb3; /* Promenjena boja teksta za ime, opis i cenu */
         }
+
         p:nth-child(3) {
           color: var(--ion-color-primary);
         }
@@ -65,14 +64,14 @@ ion-content {
           margin-top: 10px;
 
           ion-button {
-            --color: #565656;
+            --color: #ffddb3; /* Promenjena boja teksta za dugmad */
             font-size: 16px;
             margin-left: 8px;
             margin-right: 8px;
           }
 
           ion-label {
-            color: #565656 !important;
+            color: #ffddb3 !important;
             font-size: 16px;
           }
         }
@@ -85,7 +84,7 @@ ion-content {
   ion-item {
     --padding-start: 0;
     font-size: 18px;
-    color: #434343;
+    color: #ffddb3;
 
     ion-badge {
       width: 12px;
@@ -97,7 +96,7 @@ ion-content {
 }
 
 hr {
-  background: #97979713;
+  background: #ffddb3;
 }
 
 .cart-total {
@@ -109,17 +108,15 @@ hr {
       margin-right: 0;
     }
 
-    ion-label:nth-child(1) {
-      color: #919191;
-    }
-
+    ion-label:nth-child(1),
     ion-label:nth-child(2) {
-      color: #434343;
+      color: #ffddb3; /* Promenjena boja teksta za ukupnu cenu */
     }
   }
 }
 
 ion-footer {
+  --background: #ffddb3; /* Nova boja pozadine za footere */
   padding-left: 20px;
   padding-right: 20px;
 

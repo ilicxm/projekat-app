@@ -24,3 +24,20 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+
+ion-toolbar {
+  --background: #ffddb3;
+}
+
+ion-button{
+  --background: #ff7409; /* Nova boja pozadine za dugmad */
+}
+
+ion-tabs {
+  --background: #ffddb3; /* Nova boja pozadine za tabove */
+}
+
+
+
+
