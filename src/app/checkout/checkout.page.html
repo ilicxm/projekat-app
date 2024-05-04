@@ -1,12 +1,4 @@
-<ion-header>
-  <ion-toolbar>
 
-
-    <ion-buttons slot="end">
-
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
 
@@ -38,7 +30,8 @@
     <p>Total Price: {{ getTotalPrice() }}</p>
   </div>
 
-  <!-- New form fields -->
+
+
   <ion-item>
     <ion-label>Name</ion-label>
     <ion-input type="text" [(ngModel)]="customer.name"></ion-input>
@@ -90,13 +83,13 @@
   </ion-item>
 
 </ion-content>
+
+
 <ion-footer class="custom-footer">
   <ion-toolbar>
     <ion-button (click)="navigateToTab2()" expand="block">Shop more</ion-button>
-  </ion-toolbar>
-</ion-footer>
-<ion-footer translucent="true" class="ion-no-border" mode="md">
-  <ion-toolbar color="translucent">
     <ion-button expand="block" class="main-button" routerLink="/confirm" routerDirection="forward">Buy</ion-button>
+
   </ion-toolbar>
 </ion-footer>
+

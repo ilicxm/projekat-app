@@ -7,10 +7,11 @@
       Order
     </ion-title>
   </ion-toolbar>
-  <ion-searchbar color="light" placeholder="Search" (ionChange)="filterProducts($event.detail?.value || '')"></ion-searchbar>
 
 
 </ion-header>
+
+<ion-searchbar class="custom-searchbar" color="light" placeholder="Search" (ionChange)="filterProducts($event.detail?.value || '')"></ion-searchbar>
 
 <ion-content>
   <div class="notification-popup" [ngClass]="{ 'show': showNotificationPopup }">
@@ -35,9 +36,11 @@
   </div>
 </ion-content>
 
-<ion-footer translucent="true" class="ion-no-border" mode="md">
-  <ion-toolbar color="translucent">
+
+<ion-footer class="custom-footer">
+  <ion-toolbar>
     <ion-button expand="block" class="main-button" [routerLink]="['/my-cart']" [state]="{ cartItems: cartItems }">Go to Cart</ion-button>
+
   </ion-toolbar>
 </ion-footer>
 

@@ -1,10 +1,4 @@
-.backbtn {
-  margin-left: 15px;
-}
 
-.notification {
-  margin-right: 15px;
-}
 
 ion-content {
   --padding-top: 16px;
@@ -16,6 +10,7 @@ ion-content {
 .title {
   margin-top: 0;
   color: #ffffff;
+  text-align: center;
 }
 
 .cart-items {
@@ -115,12 +110,14 @@ hr {
   }
 }
 
-ion-footer {
-  --background: #ffddb3; /* Nova boja pozadine za footere */
-  padding-left: 20px;
-  padding-right: 20px;
-
-  .main-button::after {
-    box-shadow: none !important;
-  }
+ion-footer.custom-footer {
+  --ion-background-color: #ffddb3;
+  --ion-text-color: #1a1a1a;
 }
+
+
+ion-footer.custom-footer ion-button {
+  --ion-color-base: #ff7409;
+  --ion-color-text-button: #ffffff;
+}
+

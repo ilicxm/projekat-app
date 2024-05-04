@@ -40,7 +40,7 @@ ion-toolbar ion-title {
   object-fit: cover; /* Održava omjer širine i visine */
 }
 
-ion-searchbar {
+ion-header.custom-searchbar {
   --background: #ffffff; /* Boja pozadine pretrage */
   --color: #ffddb3; /* Boja teksta */
   --placeholder-color: #ffddb3; /* Boja placeholder teksta */
@@ -146,3 +146,17 @@ ion-button.addbutton {
   margin: 0 auto; /* Centriranje dugmeta */
   align-self: center; /* Centriranje dugmeta */
 }
+
+ion-footer.custom-footer {
+  --ion-background-color: #ffddb3;
+  --ion-text-color: #1a1a1a;
+}
+
+
+ion-footer.custom-footer ion-button {
+  --ion-color-base: #ff7409;
+  --ion-color-text-button: #ffffff;
+
+
+}
+

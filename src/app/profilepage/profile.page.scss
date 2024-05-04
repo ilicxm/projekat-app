@@ -23,7 +23,7 @@
 ion-content {
   --ion-background-color:  #ffddb3; // Bez boje pozadine
   --ion-color-base: #4d4d4d; // Tamno siva boja teksta
-  --ion-text-color: #4d4d4d; // Tamno siva boja teksta
+  --ion-text-color: #ffffff; // Tamno siva boja teksta
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --padding-top: 16px;
   --padding-bottom: 16px;
@@ -41,13 +41,13 @@ ion-toolbar ion-title{
 ion-item {
   --background: #ffddb3; /* Postavljanje pozadinske boje item containera */
   border-radius: 15px; /* Prilagodite vrijednost radi željenog izgleda */
-  color: #4d4d4d; /* Boja teksta itema */
+  color: #6e6868; /* Boja teksta itema */
 
   --inner-border-width: 0;
 }
 
 ion-label {
-  color: #333; // Tamnija boja teksta
+  color: #ffffff; // Tamnija boja teksta
   font-size: larger;
 }
 
@@ -55,19 +55,30 @@ ion-input {
   --color: #ff8e38; // Narandžasta boja
 }
 
-ion-footer {
+ion-footer.custom-footer {
   ion-toolbar {
-    --background: #ff6600; // Svetlonarandžasta boja
-    --color: #fff; // Bela boja teksta
+    display: flex; /* Koristimo fleksibilni prikaz za centriranje */
+    justify-content: center; /* Centriranje sadržaja na horizontalnoj osi */
+    align-items: center; /* Centriranje sadržaja na vertikalnoj osi */
+    --background: #ffddb3; // Svetlonarandžasta boja
+    --ion-color-base: #fff; // Bela boja teksta
+
 
     ion-button {
+      margin: auto; /* Centriranje dugmeta */
+      width: 150px; /* Automatska širina dugmeta prema dužini teksta */
       font-size: 16px; /* Prilagodite veličinu fonta po želji */
       padding-top: 8px; /* Prilagodite gornji padding po želji */
       padding-bottom: 8px; /* Prilagodite donji padding po želji */
-      --ion-color-primary: #bd4224; // Svetlonarandžasta boja
+      --color: white; /* Boja teksta */
     }
   }
 }
+
+
+
+
+
 
 .header-background {
   position: absolute;

@@ -31,12 +31,26 @@ ion-toolbar {
 }
 
 ion-button{
-  --background: #ff7409; /* Nova boja pozadine za dugmad */
+  --background: #ff8b38; /* Nova boja pozadine za dugmad */
+  --color: #ffffff;
 }
 
-ion-tabs {
-  --background: #ffddb3; /* Nova boja pozadine za tabove */
+ion-content,
+ion-card-content,
+ion-footer {
+  --background: #ffddb3 !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Prilagodite font prema vašim preferencijama */
+
 }
+
+ion-tab-bar{
+  --background: #ff8b38;
+
+}
+
+
+
+
 
 
 

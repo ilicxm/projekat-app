@@ -2,6 +2,8 @@
 $tab-icon-size: 20px; // Customize the size of the icons as needed
 
 ion-tabs {
+
+
   ion-tab-bar {
 
     box-shadow: none; // Remove default shadow
@@ -9,6 +11,7 @@ ion-tabs {
     ion-tab-button {
       ion-icon {
         font-size: 22px;
+        color: #ffddb3;
         --ionicon-stroke-width: 0.5px; // Adjust icon stroke width
       }
 
@@ -16,7 +19,7 @@ ion-tabs {
         display: block;
         text-align: center;
         font-size: 12px; // Adjust label font size if needed
-        color: white; // Text color for labels
+        color: #ffffff; // Text color for labels
       }
 
       // Add circular background to icons
