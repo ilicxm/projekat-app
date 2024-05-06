@@ -14,8 +14,8 @@ export class InitialPageComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.router.navigate(['/login']); // Preusmeri na glavnu stranicu nakon 10 sekundi
-    }, 20000); // 10 sekundi
+      this.router.navigate(['/login']);
+    }, 10000);
   }
 }
 

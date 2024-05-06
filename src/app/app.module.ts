@@ -7,11 +7,12 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { InitialPageComponent } from './initial-page/initial-page.component'; // Uvoz InitialPageComponent
+import { InitialPageComponent } from './initial-page/initial-page.component';
+import {HttpClientModule} from "@angular/common/http"; // Uvoz InitialPageComponent
 
 @NgModule({
   declarations: [AppComponent, InitialPageComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,   HttpClientModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }], // Koristimo IonicRouteStrategy
   bootstrap: [AppComponent],
 })
