@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8100/signup.php'
+  apiUrl: 'http://localhost:8100'
 };
 /*
  * For easier debugging in development mode, you can import the following file

@@ -1,6 +1,7 @@
+// signup.page.ts
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { UserService } from '../services/user.services';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -11,20 +12,13 @@ export class SignupPage {
   email: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private userService: UserService) {}
 
   signUp() {
-    const userData = {
-      name: this.name,
-      email: this.email,
-      password: this.password
-    };
-
-    this.http.post(environment.apiUrl, userData)
-      .subscribe((response) => {
+    this.userService.register(this.name, this.email, this.password)
+      .subscribe((response: any) => {
         console.log('Response from server:', response);
-        // Ovdje možete dodati logiku za obradu odgovora, kao što je prikazivanje poruke korisniku
+        // Handle response logic here
       });
   }
-
 }
