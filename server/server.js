@@ -19,6 +19,13 @@ mongoose.connect('mongodb://localhost:27017/projekatmobilno', {
   console.error('Error connecting to MongoDB:', error);
 });
 
+const corsOptions = {
+  origin: 'http://localhost:8100', // Allow requests from Angular app running on port 8100
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
+
 // Define user schema
 const userSchema = new mongoose.Schema({
   name: String,
@@ -29,16 +36,18 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 // Endpoint for user registration
-app.post('/register', async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-    const user = new User({ name, email, password });
-    await user.save();
-    res.status(201).json({ message: 'User registered successfully.' });
-  } catch (error) {
-    console.error('Error registering user:', error);
-    res.status(500).json({ error: 'Internal server error.' });
-  }
+app.post('/register', (req, res) => {
+  const { name, email, password } = req.body;
+  const newUser = new User({ name, email, password });
+  newUser.save()
+    .then(() => {
+      console.log('User registered successfully');
+      res.status(200).send({ message: 'User registered successfully' });
+    })
+    .catch(error => {
+      console.error('Error registering user:', error);
+      res.status(500).send({ error: 'An error occurred while registering user' });
+    });
 });
 
 app.listen(PORT, () => {
