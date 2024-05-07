@@ -5,6 +5,7 @@
     {
       "files": ["*.ts"],
       "parserOptions": {
+        "ecmaVersion": 6,
         "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
@@ -38,9 +39,21 @@
       }
     },
     {
+      "files": ["*.js"],
+      "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "script" // Add this line to recognize CommonJS syntax
+      },
+      "rules": {
+        // Add any additional rules specific to Node.js environment
+      }
+    },
+    {
       "files": ["*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     }
   ]
 }
+
+

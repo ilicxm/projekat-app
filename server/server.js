@@ -1,55 +1,49 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors'); // Import cors middleware
+const mysql = require('mysql');
+const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = 3000;
 
+// MySQL connection
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'projekatmobilno'
+});
+
+connection.connect();
+
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors()); // Use cors middleware to handle CORS issues
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/projekatmobilno', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch((error) => {
-  console.error('Error connecting to MongoDB:', error);
-});
+// Serve static files
+const staticPath = path.join(__dirname, 'www'); // Adjust path as needed
+app.use(express.static(staticPath));
 
-const corsOptions = {
-  origin: 'http://localhost:8100', // Allow requests from Angular app running on port 8100
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-app.use(cors(corsOptions));
-
-// Define user schema
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String
-});
-
-const User = mongoose.model('User', userSchema);
-
-// Endpoint for user registration
-app.post('/register', (req, res) => {
+// Signup endpoint
+app.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
-  const newUser = new User({ name, email, password });
-  newUser.save()
-    .then(() => {
-      console.log('User registered successfully');
-      res.status(200).send({ message: 'User registered successfully' });
-    })
-    .catch(error => {
-      console.error('Error registering user:', error);
-      res.status(500).send({ error: 'An error occurred while registering user' });
-    });
+  const query = `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`;
+  connection.query(query, [name, email, password], (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+    res.status(200).json({ message: 'User registered successfully' });
+  });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Serve index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(staticPath, 'index.html'));
+});
+
+// Start server
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });
