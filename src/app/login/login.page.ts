@@ -21,4 +21,5 @@ export class LoginPage implements OnInit {
     // Redirecting to tabs/tab1
     this.navCtrl.navigateRoot('/tabs', { animationDirection: 'forward' });
   }
+
 }

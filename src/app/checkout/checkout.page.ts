@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { OrderService } from '../services/checkout.services';
 
-// Interface for product details
-interface Product {
+export interface Product {
   name: string;
   description: string;
   price: string;
@@ -11,7 +11,7 @@ interface Product {
 }
 
 // Interface for customer details
-interface Customer {
+export interface Customer {
   name: string;
   surname: string;
   address: string;
@@ -40,7 +40,7 @@ export class CheckoutPage {
   creditCard: CreditCard = { number: '', cvc: '', cardholderName: '', expiryDate: '' }; // Credit card details
   deliveryDate: string;
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private orderService: OrderService ) {
     // Retrieve cart items from query params
     this.deliveryDate = new Date().toISOString();
     this.route.queryParams.subscribe(params => {
@@ -81,4 +81,20 @@ export class CheckoutPage {
       this.cartItems.splice(index, 1);
     }
   }
+
+  placeOrder() {
+    this.orderService.placeOrder(this.cartItems, this.customer, this.paymentMethod, this.deliveryDate)
+      .subscribe(
+        response => {
+          console.log('Order placed successfully', response);
+          // Preusmeravanje na stranicu Confirm ako je narudžbina uspešno poslata
+          this.router.navigate(['/confirm']); // Promenite '/confirm' prema vašoj konfiguraciji ruta
+        },
+        error => {
+          console.error('Error placing order', error);
+          // Handle error response
+        }
+      );
+  }
+
 }
