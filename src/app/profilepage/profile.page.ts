@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfileService } from '../services/profilepage.services'; // Adjust the path if needed
+import { ProfileService } from '../services/profilepage.services'; // Prilagodite putanju ako je potrebno
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +9,9 @@ import { ProfileService } from '../services/profilepage.services'; // Adjust the
 })
 
 export class ProfilePage {
+  constructor(private router: Router, private profileService: ProfileService) {}
 
+  // Profile data
   profile: any = {
     name: '',
     address: '',
@@ -17,21 +19,17 @@ export class ProfilePage {
     email: '',
     postal_code: null,
     phone_number: null
-  };
-  constructor(private router: Router, private profileService: ProfileService) {}
+  }; // Objekat za čuvanje podataka profila
+  profileSaved: boolean = false; // Zastava za praćenje da li je profil sačuvan
+  editMode: boolean = false; // Zastava za praćenje da li je u režimu izmene
 
-  // Profile data
- // profile: any = {}; // Object to store profile data
-  profileSaved: boolean = false; // Flag to track if profile is saved
-  editMode: boolean = false; // Flag to track if in edit mode
-
-  // Function to handle file selection for profile picture
+  // Funkcija za upravljanje odabirom datoteke za profilnu sliku
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     this.profile.picture = URL.createObjectURL(file);
   }
 
-  // Function to toggle edit mode
+  // Funkcija za prebacivanje u režim izmene
   toggleEditMode() {
     if (this.editMode && this.profileSaved) {
       this.editMode = false;
@@ -40,30 +38,30 @@ export class ProfilePage {
     }
   }
 
-  // Function to save profile
+  // Funkcija za čuvanje profila
   saveProfile() {
-    // Set user ID before saving the profile
-    this.profile.userid = this.getUserIdSomehow();
+    // Postavljamo ID korisnika pre čuvanja profila
+
 
     this.profileService.saveProfile(this.profile)
       .subscribe(
         (response: any)=> {
-          console.log('Profile saved successfully', response);
+          console.log('Profil uspešno sačuvan', response);
           this.profileSaved = true;
           this.editMode = false;
         },
         (error: any) => {
-          console.error('Error saving profile', error);
+          console.error('Greška prilikom čuvanja profila', error);
         }
       );
   }
 
-  // Function to handle logout
+  // Funkcija za odjavu
   logout() {
     this.router.navigate(['/login']);
   }
 
-  // Private method to get user ID
+  // Privatna metoda za dobijanje ID korisnika
   private getUserIdSomehow(): number | null {
     // Implementacija funkcije za dobijanje ID korisnika
     // Na primer, ako koristite lokalno skladište za prijavu
