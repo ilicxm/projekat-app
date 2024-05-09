@@ -12,6 +12,20 @@ export class ProfileService {
 
   // Function to save profile data to the database
   saveProfile(profileData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/profiles`, profileData);
+    return this.http.post(`${this.baseUrl}/updateOrCreateProfile`, profileData);
+  }
+
+  // Function to update profile data in the database
+  updateProfile(profileData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/updateOrCreateProfile`, profileData);
+  }
+
+  // Function to check if user with given email exists in the database
+  checkUserByEmail(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/checkUserByEmail`, { email });
   }
 }
+
+
+
+

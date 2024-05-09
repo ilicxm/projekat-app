@@ -8,9 +8,6 @@ const path = require('path');
 // Definišemo dozvoljene origin-e
 const allowedOrigins = ['http://localhost:3000'];
 
-this.http.post('http://localhost:3000/register', data, httpOptions)
-
-
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -28,9 +25,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'] // Allow Content-Type and Authorization headers
 }));
 
-
-
-
 // Serve static files
 const staticPath = path.join(__dirname, 'www'); // Adjust path as needed
 app.use(express.static(staticPath));
@@ -45,72 +39,8 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-app.post('/register', (req, res) => {
-  const { name, email, password } = req.body;
-  const query = `INSERT INTO user (name, email, password) VALUES (?, ?, ?)`;
-  connection.query(query, [name, email, password], (error, results, fields) => {
-    if (error) {
-      console.error('Error registering user:', error);
-      return res.status(500).json({ error: 'Internal server error' });
-    }
-    console.log('User registered successfully');
-    res.status(200).json({ message: 'User registered successfully' });
-  });
-});
-
-
-// Serve index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(staticPath, 'index.html'));
-});
-
-// Checkout endpoint
-app.post('/checkout', (req, res) => {
-  const { cartItems, customer, paymentMethod, deliveryDate } = req.body;
-
-  // Constructing the description of items in the order
-  const description = cartItems.map(item => `${item.name} (${item.quantity})`).join(', ');
-
-  const order = {
-    description,
-    name: customer.name,
-    surname: customer.surname,
-    address: customer.address,
-    phone_number: customer.phone,
-    date_of_delivery: new Date(deliveryDate),
-    payment_method: paymentMethod
-  };
-
-  const query = `INSERT INTO orders (description, name, surname, address, phone_number, date_of_delivery, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-
-  connection.query(query, [order.description, order.name, order.surname, order.address, order.phone_number, order.date_of_delivery, order.payment_method], (error, results, fields) => {
-    if (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-      return;
-    }
-    res.status(200).json({ message: 'Order placed successfully' });
-  });
-});
-
-app.post('/updateProfile', (req, res) => {
-  const { userid, name, address, city, postal_code, email, phone_number } = req.body;
-
-  // Construct the query to update the profile
-  const query = `UPDATE user SET name=?, address=?, city=?, postal_code=?, email=?, phone_number=? WHERE userid=?`;
-
-  // Execute the query with the provided values
-  connection.query(query, [name, address, city, postal_code, email, phone_number, userid], (error, results, fields) => {
-    if (error) {
-      console.error('Error updating profile:', error);
-      res.status(500).json({ error: 'Internal server error' });
-      return;
-    }
-    res.status(200).json({ message: 'Profile updated successfully' });
-  });
-});
-
-app.post('/profiles', (req, res) => {
+// Endpoint for updating or creating a profile
+app.post('/updateOrCreateProfile', (req, res) => {
   const { name, address, city, postal_code, email, phone_number } = req.body;
 
   // Check if phone_number is provided and not null
@@ -119,20 +49,55 @@ app.post('/profiles', (req, res) => {
     return;
   }
 
-  // Construct the query to create a new profile
-  const query = `INSERT INTO user (name, address, city, postal_code, email, phone_number) VALUES (?, ?, ?, ?, ?, ?)`;
-  const values = [name, address, city, postal_code, email, phone_number];
-
-  // Execute the query with the provided values
-  connection.query(query, values, (error, results, fields) => {
+  // Check if the user already exists by email
+  const checkUserQuery = `SELECT * FROM user WHERE email = ?`;
+  connection.query(checkUserQuery, [email], (error, results, fields) => {
     if (error) {
-      console.error('Error creating profile:', error);
+      console.error('Error checking user:', error);
       res.status(500).json({ error: 'Internal server error' });
       return;
     }
-    res.status(200).json({ message: 'Profile created successfully' });
+
+    if (results.length > 0) {
+      // If user exists, update their profile
+      const userId = results[0].userid;
+      const updateQuery = `UPDATE user SET name=?, address=?, city=?, postal_code=?, email=?, phone_number=? WHERE userid=?`;
+      connection.query(updateQuery, [name, address, city, postal_code, email, phone_number, userId], (error, results, fields) => {
+        if (error) {
+          console.error('Error updating profile:', error);
+          res.status(500).json({ error: 'Internal server error' });
+          return;
+        }
+        res.status(200).json({ message: 'Profile updated successfully' });
+      });
+    } else {
+      // If user does not exist, create a new profile
+      const createQuery = `INSERT INTO user (name, address, city, postal_code, email, phone_number) VALUES (?, ?, ?, ?, ?, ?)`;
+      connection.query(createQuery, [name, address, city, postal_code, email, phone_number], (error, results, fields) => {
+        if (error) {
+          console.error('Error creating profile:', error);
+          res.status(500).json({ error: 'Internal server error' });
+          return;
+        }
+        res.status(200).json({ message: 'Profile created successfully' });
+      });
+    }
   });
 });
+
+app.post('/checkUserByEmail', (req, res) => {
+  const { email } = req.body;
+  const checkUserQuery = `SELECT * FROM user WHERE email = ?`;
+  connection.query(checkUserQuery, [email], (error, results, fields) => {
+    if (error) {
+      console.error('Error checking user:', error);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+    res.status(200).json({ exists: results.length > 0 });
+  });
+});
+
 
 const port = 3000; // Definicija porta
 
