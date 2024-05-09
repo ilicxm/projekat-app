@@ -12,3 +12,4 @@ export class UserService {
     return this.http.post<any>('http://localhost:3000/register', { name, email, password });
   }
 }
+

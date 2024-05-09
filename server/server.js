@@ -5,13 +5,35 @@ const app = express();
 const mysql = require('mysql');
 const path = require('path');
 
-// Ostatak vašeg server koda ide ovdje
+// Definišemo dozvoljene origin-e
+const allowedOrigins = ['http://localhost:3000'];
 
-const port = 3000; // Definicija porta
+this.http.post('http://localhost:3000/register', data, httpOptions)
 
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
+
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests from allowed origins
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  exposedHeaders: ['Content-Type'], // Specify the headers exposed to the client
+  allowedHeaders: ['Content-Type', 'Authorization'] // Allow Content-Type and Authorization headers
+}));
+
+
+
+
+// Serve static files
+const staticPath = path.join(__dirname, 'www'); // Adjust path as needed
+app.use(express.static(staticPath));
 
 // MySQL connection
 const connection = mysql.createConnection({
@@ -23,28 +45,19 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cors()); // Enable CORS for all routes
-
-// Serve static files
-const staticPath = path.join(__dirname, 'www'); // Adjust path as needed
-app.use(express.static(staticPath));
-
-// Signup endpoint
 app.post('/register', (req, res) => {
   const { name, email, password } = req.body;
   const query = `INSERT INTO user (name, email, password) VALUES (?, ?, ?)`;
   connection.query(query, [name, email, password], (error, results, fields) => {
     if (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-      return;
+      console.error('Error registering user:', error);
+      return res.status(500).json({ error: 'Internal server error' });
     }
+    console.log('User registered successfully');
     res.status(200).json({ message: 'User registered successfully' });
   });
 });
+
 
 // Serve index.html
 app.get('/', (req, res) => {
@@ -119,5 +132,11 @@ app.post('/profiles', (req, res) => {
     }
     res.status(200).json({ message: 'Profile created successfully' });
   });
+});
+
+const port = 3000; // Definicija porta
+
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });
 
