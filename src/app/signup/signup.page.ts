@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.services';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -11,13 +11,16 @@ export class SignupPage {
   email: string = '';
   password: string = '';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   signUp() {
     this.userService.register(this.name, this.email, this.password)
       .subscribe((response: any) => {
         console.log('Response from server:', response);
-        // Handle response logic here
+        if (response && response.message === 'User registered successfully') {
+          // Ako je registracija uspešna, preusmeri korisnika na login stranicu
+          this.router.navigate(['/login']); // Dodato preusmeravanje
+        }
       });
   }
 }

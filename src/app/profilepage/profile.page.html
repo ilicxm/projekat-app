@@ -1,30 +1,27 @@
+<!-- profile.page.html -->
 <ion-header [translucent]="true">
   <ion-toolbar>
     <div class="header-background">
       <img src="assets/Image/aranci1.jpg" alt="Header Background Image">
     </div>
 
-
     <ion-title>
       Profile
     </ion-title>
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-
   <div class="profile-info">
     <!-- Profile Picture -->
     <div class="profile-picture">
       <div class="profile-picture-frame">
         <ion-img [src]="profile.picture" *ngIf="profile.picture"></ion-img>
       </div>
-      <ion-input  type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!profile.picture || editMode"></ion-input>
+      <ion-input type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!profile.picture || editMode"></ion-input>
     </div>
 
-    <!-- Name, Address, City, Gender, Email, Phone Number -->
+    <!-- Name, Address, City, Postal Code, Email, Phone Number -->
     <ion-item>
       <ion-label position="floating">Name</ion-label>
       <ion-input [(ngModel)]="profile.name" [disabled]="!editMode"></ion-input>
@@ -39,7 +36,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Postal Code</ion-label>
-      <ion-input [(ngModel)]="profile.postal" [disabled]="!editMode"></ion-input>
+      <ion-input [(ngModel)]="profile.postal_code" [disabled]="!editMode"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Email</ion-label>
@@ -47,10 +44,9 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Phone Number</ion-label>
-      <ion-input [(ngModel)]="profile.phoneNumber" [disabled]="!editMode"></ion-input>
+      <ion-input [(ngModel)]="profile.phone_number" [disabled]="!editMode"></ion-input>
     </ion-item>
   </div>
-
 </ion-content>
 
 <ion-footer class="custom-footer">

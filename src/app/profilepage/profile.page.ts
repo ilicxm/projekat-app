@@ -1,3 +1,4 @@
+// profile.page.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService } from '../services/profilepage.services';
@@ -14,9 +15,9 @@ export class ProfilePage {
     name: '',
     address: '',
     city: '',
+    postal_code: '',
     email: '',
-    postal_code: null,
-    phone_number: null
+    phone_number: ''
   };
   profileSaved: boolean = false;
   editMode: boolean = false;
@@ -27,27 +28,15 @@ export class ProfilePage {
   }
 
   toggleEditMode() {
-    if (this.editMode && this.profileSaved) {
-      this.editMode = false;
-    } else {
-      this.editMode = !this.editMode;
-    }
+    this.editMode = !this.editMode;
   }
 
   saveProfile() {
-    // Provera da li korisnik sa email adresom već postoji
-    this.profileService.checkUserByEmail(this.profile.email)
-      .subscribe((response: any) => {
-        if (response.exists) {
-          // Ako korisnik već postoji, ažuriramo njegov profil
-          this.updateProfile();
-        } else {
-          // Ako korisnik ne postoji, kreiramo novi profil
-          this.createProfile();
-        }
-      }, (error: any) => {
-        console.error('Error checking user by email', error);
-      });
+    if (this.profileSaved) {
+      this.updateProfile();
+    } else {
+      this.createProfile();
+    }
   }
 
   updateProfile() {
@@ -61,9 +50,8 @@ export class ProfilePage {
       });
   }
 
-
   createProfile() {
-    this.profileService.saveProfile(this.profile)
+    this.profileService.createProfile(this.profile)
       .subscribe((response: any) => {
         console.log('Profile successfully created', response);
         this.profileSaved = true;
@@ -77,6 +65,3 @@ export class ProfilePage {
     this.router.navigate(['/login']);
   }
 }
-
-
-
