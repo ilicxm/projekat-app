@@ -1,5 +1,4 @@
-// profile.page.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService } from '../services/profilepage.services';
 
@@ -8,7 +7,7 @@ import { ProfileService } from '../services/profilepage.services';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage {
+export class ProfilePage implements OnInit {
   constructor(private router: Router, private profileService: ProfileService) {}
 
   profile: any = {
@@ -21,6 +20,10 @@ export class ProfilePage {
   };
   profileSaved: boolean = false;
   editMode: boolean = false;
+
+  ngOnInit() {
+    this.getUserProfile();
+  }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -39,6 +42,22 @@ export class ProfilePage {
     }
   }
 
+  getUserProfile() {
+    // Pretpostavka da se korisnikov email nalazi u lokalnoj memoriji nakon prijave
+    const userEmail = localStorage.getItem('userEmail');
+
+    if (userEmail) {
+      this.profileService.getUserProfile(userEmail)
+        .subscribe((response: any) => {
+          console.log('User profile:', response);
+          this.profile = response.profile;
+          this.profileSaved = true;
+        }, (error: any) => {
+          console.error('Error getting user profile', error);
+        });
+    }
+  }
+
   updateProfile() {
     this.profileService.updateProfile(this.profile)
       .subscribe((response: any) => {
@@ -51,6 +70,9 @@ export class ProfilePage {
   }
 
   createProfile() {
+    // Convert phone_number to string
+    this.profile.phone_number = this.profile.phone_number.toString();
+
     this.profileService.createProfile(this.profile)
       .subscribe((response: any) => {
         console.log('Profile successfully created', response);
@@ -65,3 +87,6 @@ export class ProfilePage {
     this.router.navigate(['/login']);
   }
 }
+
+
+

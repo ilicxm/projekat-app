@@ -1,4 +1,3 @@
-// profilepage.services.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -30,4 +29,10 @@ export class ProfileService {
   createProfile(profileData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/createProfile`, profileData);
   }
+
+  // Function to get user profile data from the database
+  getUserProfile(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/getUserProfile`, { email });
+  }
 }
+
