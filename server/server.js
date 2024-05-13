@@ -30,6 +30,9 @@ app.use(cors()); // Enable CORS for all routes
 const staticPath = path.join(__dirname, 'www'); // Adjust path as needed
 app.use(express.static(staticPath));
 
+
+
+// NE DIRATI
 // Signup endpoint
 app.post('/register', (req, res) => {
   const { name, email, password } = req.body;
@@ -150,3 +153,4 @@ app.post('/createProfile', (req, res) => {
     res.status(200).json({ message: 'Profile created successfully' });
   });
 });
+// NE DIRATI
