@@ -133,7 +133,7 @@ app.post('/updateProfile', (req, res) => {
 
 // Create profile endpoint
 app.post('/createProfile', (req, res) => {
-  const { name, address, city, postal_code, email, phone_number } = req.body;
+  const { name, address, city, postal_code, phone_number } = req.body;
 
   // Check if phone_number is provided and not null
   if (!phone_number) {
@@ -141,8 +141,8 @@ app.post('/createProfile', (req, res) => {
     return;
   }
 
-  const query = `INSERT INTO profiles (name, address, city, postal_code, email, phone_number) VALUES (?, ?, ?, ?, ?, ?)`;
-  const values = [name, address, city, postal_code, email, phone_number];
+  const query = `INSERT INTO profiles (name, address, city, postal_code, phone_number) VALUES (?, ?, ?, ?, ?, ?)`;
+  const values = [name, address, city, postal_code, phone_number];
 
   connection.query(query, values, (error, results, fields) => {
     if (error) {
