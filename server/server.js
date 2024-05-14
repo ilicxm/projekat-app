@@ -141,7 +141,7 @@ app.post('/createProfile', (req, res) => {
     return;
   }
 
-  const query = `INSERT INTO profiles (name, address, city, postal_code, phone_number) VALUES (?, ?, ?, ?, ?, ?)`;
+  const query = `INSERT INTO profiles (name, address, city, postal_code, phone_number) VALUES (?, ?, ?, ?, ?)`;
   const values = [name, address, city, postal_code, phone_number];
 
   connection.query(query, values, (error, results, fields) => {

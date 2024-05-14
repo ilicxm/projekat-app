@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +26,11 @@ export class ProfileService {
   }
 
   // Function to create profile data in the database
-  createProfile(profileData: any): Observable<any> {
+  createProfile(profileData: any, email: string): Observable<any> {
+    profileData.email = email;
+    profileData.phone_number = profileData.phone_number.toString();
     return this.http.post(`${this.baseUrl}/createProfile`, profileData);
+
   }
 
   // Function to get user profile data from the database

@@ -55,6 +55,8 @@ export class ProfilePage implements OnInit {
         }, (error: any) => {
           console.error('Error getting user profile', error);
         });
+    } else {
+      console.error('User email not found'); // Dodatno upozorenje ako email nije pronađen
     }
   }
 
@@ -71,9 +73,16 @@ export class ProfilePage implements OnInit {
 
   createProfile() {
     // Convert phone_number to string
-    this.profile.phone_number = this.profile.phone_number.toString();
+    const userEmail = localStorage.getItem('userEmail');
+    if (!userEmail) {
+      console.error('User email not found');
+      return;
+    }
 
-    this.profileService.createProfile(this.profile)
+    // Assign the email to the profile object
+    this.profile.email = userEmail;
+
+    this.profileService.createProfile(this.profile, userEmail)
       .subscribe((response: any) => {
         console.log('Profile successfully created', response);
         this.profileSaved = true;
@@ -82,7 +91,6 @@ export class ProfilePage implements OnInit {
         console.error('Error creating profile', error);
       });
   }
-
   logout() {
     this.router.navigate(['/login']);
   }
