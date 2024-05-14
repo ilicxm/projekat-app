@@ -107,7 +107,20 @@ export class ProfilePage implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('userEmail'); // Dodato brisanje e-maila iz localStorage prilikom odjave
+    // Brisanje email adrese iz localStorage prilikom odjave
+    localStorage.removeItem('userEmail');
+
+    // Resetovanje profila na prazne vrednosti
+    this.profile = {
+      name: '',
+      address: '',
+      city: '',
+      postal_code: '',
+      email: '',
+      phone_number: ''
+    };
+
+    // Preusmeravanje na login stranicu
     this.router.navigate(['/login']);
   }
 }

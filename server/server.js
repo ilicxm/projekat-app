@@ -1,3 +1,5 @@
+// server.js
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -30,9 +32,6 @@ app.use(cors()); // Enable CORS for all routes
 const staticPath = path.join(__dirname, 'www'); // Adjust path as needed
 app.use(express.static(staticPath));
 
-
-
-// NE DIRATI
 // Signup endpoint
 app.post('/register', (req, res) => {
   const { name, email, password } = req.body;
@@ -46,6 +45,7 @@ app.post('/register', (req, res) => {
     res.status(200).json({ message: 'User registered successfully' });
   });
 });
+
 // Login endpoint
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
@@ -88,16 +88,12 @@ app.post('/login', (req, res) => {
         }
       });
 
-      localStorage.setItem('userEmail', email);
-      console.log(email);
-
       res.status(200).json({ message: 'Login successful', user: { email: email } });
     } else {
       res.status(401).json({ error: 'Invalid email or password' });
     }
   });
 });
-
 
 // Checkout endpoint
 app.post('/checkout', (req, res) => {
@@ -128,6 +124,7 @@ app.post('/checkout', (req, res) => {
   });
 });
 
+// Check user by email endpoint
 app.post('/checkUserByEmail', (req, res) => {
   const { email } = req.body;
   const query = `SELECT * FROM users WHERE email = ?`;
@@ -145,19 +142,47 @@ app.post('/checkUserByEmail', (req, res) => {
   });
 });
 
-
-
 // Update profile endpoint
-app.post('/updateProfile', (req, res) => {
-  const { userid, name, address, city, postal_code, email, phone_number } = req.body;
-  const query = `UPDATE profiles SET name=?, address=?, city=?, postal_code=?, email=?, phone_number=? WHERE userid=?`;
-  connection.query(query, [name, address, city, postal_code, email, phone_number, userid], (error, results, fields) => {
+app.put('/profiles/:email', (req, res) => {
+  const email = req.params.email;
+  const { name, address, city, postal_code, phone_number } = req.body;
+
+  // Check if profile exists
+  const checkProfileQuery = `SELECT * FROM profiles WHERE email = ?`;
+  connection.query(checkProfileQuery, [email], (error, results, fields) => {
     if (error) {
-      console.error('Error updating profile:', error);
+      console.error('Error checking user profile:', error);
       res.status(500).json({ error: 'Internal server error' });
       return;
     }
-    res.status(200).json({ message: 'Profile updated successfully' });
+
+    // If profile doesn't exist, create it
+    if (results.length === 0) {
+      const createProfileQuery = `INSERT INTO profiles (email, name, address, city, postal_code, phone_number) VALUES (?, ?, ?, ?, ?, ?)`;
+      const values = [email, name, address, city, postal_code, phone_number];
+
+      connection.query(createProfileQuery, values, (error, results, fields) => {
+        if (error) {
+          console.error('Error creating profile:', error);
+          res.status(500).json({ error: 'Internal server error' });
+          return;
+        }
+        res.status(201).json({ message: 'Profile created successfully' });
+      });
+    } else {
+      // Profile exists, update profile
+      const updateProfileQuery = `UPDATE profiles SET name = ?, address = ?, city = ?, postal_code = ?, phone_number = ? WHERE email = ?`;
+      const values = [name, address, city, postal_code, phone_number, email];
+
+      connection.query(updateProfileQuery, values, (error, results, fields) => {
+        if (error) {
+          console.error('Error updating profile:', error);
+          res.status(500).json({ error: 'Internal server error' });
+          return;
+        }
+        res.status(200).json({ message: 'Profile updated successfully' });
+      });
+    }
   });
 });
 
@@ -199,93 +224,3 @@ app.post('/profiles', (req, res) => {
     });
   });
 });
-// NE DIRATI
-
-// Update profile endpoint
-// Update profile endpoint
-app.put('/profiles/:email', (req, res) => {
-  const email = req.params.email;
-  const { name, address, city, postal_code, phone_number } = req.body;
-
-  // Check if profile exists
-  const checkProfileQuery = `SELECT * FROM profiles WHERE email = ?`;
-  connection.query(checkProfileQuery, [email], (error, results, fields) => {
-    if (error) {
-      console.error('Error checking user profile:', error);
-      res.status(500).json({ error: 'Internal server error' });
-      return;
-    }
-
-    // If profile doesn't exist, create it
-    if (results.length === 0) {
-      const createProfileQuery = `INSERT INTO profiles (email, name, address, city, postal_code, phone_number) VALUES (?, ?, ?, ?, ?, ?)`;
-      const values = [email, name, address, city, postal_code, phone_number];
-
-      connection.query(createProfileQuery, values, (error, results, fields) => {
-        if (error) {
-          console.error('Error creating profile:', error);
-          res.status(500).json({ error: 'Internal server error' });
-          return;
-        }
-        res.status(201).json({ message: 'Profile created successfully' });
-      });
-    } else {
-      // Profile exists, update profile
-      const updateProfileQuery = `UPDATE profiles SET name = ?, address = ?, city = ?, postal_code = ?, phone_number = ? WHERE email = ?`;
-      const values = [name, address, city, postal_code, phone_number, email];
-
-      connection.query(updateProfileQuery, values, (error, results, fields) => {
-        if (error) {
-          console.error('Error updating profile:', error);
-          res.status(500).json({ error: 'Internal server error' });
-          return;
-        }
-        res.status(200).json({ message: 'Profile updated successfully' });
-      });
-    }
-  });
-});
-// Update profile endpoint
-app.put('/profiles/:email', (req, res) => {
-  const email = req.params.email;
-  const { name, address, city, postal_code, phone_number } = req.body;
-
-  // Check if profile exists
-  const checkProfileQuery = `SELECT * FROM profiles WHERE email = ?`;
-  connection.query(checkProfileQuery, [email], (error, results, fields) => {
-    if (error) {
-      console.error('Error checking user profile:', error);
-      res.status(500).json({ error: 'Internal server error' });
-      return;
-    }
-
-    // If profile doesn't exist, create it
-    if (results.length === 0) {
-      const createProfileQuery = `INSERT INTO profiles (email, name, address, city, postal_code, phone_number) VALUES (?, ?, ?, ?, ?, ?)`;
-      const values = [email, name, address, city, postal_code, phone_number];
-
-      connection.query(createProfileQuery, values, (error, results, fields) => {
-        if (error) {
-          console.error('Error creating profile:', error);
-          res.status(500).json({ error: 'Internal server error' });
-          return;
-        }
-        res.status(201).json({ message: 'Profile created successfully' });
-      });
-    } else {
-      // Profile exists, update profile
-      const updateProfileQuery = `UPDATE profiles SET name = ?, address = ?, city = ?, postal_code = ?, phone_number = ? WHERE email = ?`;
-      const values = [name, address, city, postal_code, phone_number, email];
-
-      connection.query(updateProfileQuery, values, (error, results, fields) => {
-        if (error) {
-          console.error('Error updating profile:', error);
-          res.status(500).json({ error: 'Internal server error' });
-          return;
-        }
-        res.status(200).json({ message: 'Profile updated successfully' });
-      });
-    }
-  });
-});
-
