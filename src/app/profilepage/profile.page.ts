@@ -38,26 +38,48 @@ export class ProfilePage implements OnInit {
     if (this.profileSaved) {
       this.updateProfile();
     } else {
-      this.createProfile();
+      this.createOrUpdateProfile();
     }
   }
 
   getUserProfile() {
-    // Pretpostavka da se korisnikov email nalazi u lokalnoj memoriji nakon prijave
     const userEmail = localStorage.getItem('userEmail');
 
-    if (userEmail) {
-      this.profileService.getUserProfile(userEmail)
-        .subscribe((response: any) => {
-          console.log('User profile:', response);
-          this.profile = response.profile;
-          this.profileSaved = true;
-        }, (error: any) => {
-          console.error('Error getting user profile', error);
-        });
-    } else {
-      console.error('User email not found'); // Dodatno upozorenje ako email nije pronađen
+    if (!userEmail) {
+      console.error('User email not found');
+      return;
     }
+
+    this.profileService.getUserProfile(userEmail)
+      .subscribe((response: any) => {
+        console.log('User profile:', response);
+        this.profile = response.user; // Promenjeno sa response.profile na response.user
+        this.profileSaved = true;
+      }, (error: any) => {
+        console.error('Error getting user profile', error);
+      });
+  }
+
+  createOrUpdateProfile() {
+    const userEmail = this.profile.email;
+
+    if (!userEmail) {
+      console.error('User email not provided');
+      return;
+    }
+
+    this.profileService.checkUserByEmail(userEmail)
+      .subscribe((response: any) => {
+        if (response.exists) {
+          console.log('User profile already exists');
+          this.updateProfile();
+        } else {
+          console.log('Creating new user profile');
+          this.createProfile();
+        }
+      }, (error: any) => {
+        console.error('Error checking user profile', error);
+      });
   }
 
   updateProfile() {
@@ -72,17 +94,9 @@ export class ProfilePage implements OnInit {
   }
 
   createProfile() {
-    // Convert phone_number to string
-    const userEmail = localStorage.getItem('userEmail');
-    if (!userEmail) {
-      console.error('User email not found');
-      return;
-    }
+    const userEmail = this.profile.email;
 
-    // Assign the email to the profile object
-    this.profile.email = userEmail;
-
-    this.profileService.createProfile(this.profile, userEmail)
+    this.profileService.createProfile(this.profile)
       .subscribe((response: any) => {
         console.log('Profile successfully created', response);
         this.profileSaved = true;
@@ -91,10 +105,14 @@ export class ProfilePage implements OnInit {
         console.error('Error creating profile', error);
       });
   }
+
   logout() {
+    localStorage.removeItem('userEmail'); // Dodato brisanje e-maila iz localStorage prilikom odjave
     this.router.navigate(['/login']);
   }
 }
+
+
 
 
 

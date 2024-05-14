@@ -39,7 +39,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Email</ion-label>
-      <ion-input [(ngModel)]="profile.email" [disabled]="true"></ion-input>
+      <ion-input [(ngModel)]="profile.email" [disabled]="!editMode"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Phone Number</ion-label>
