@@ -27,10 +27,33 @@ export class ProfilePage implements OnInit {
     if (userEmail) {
       this.profile.email = userEmail;
       console.log('User email found:', userEmail); // Debug poruka
-      this.getProfileDetails();
+      this.checkProfileFields(userEmail);
     } else {
       console.error('User email not found in localStorage'); // Debug poruka
     }
+  }
+
+  checkProfileFields(email: string) {
+    this.profileService.checkProfileFields(email)
+      .subscribe((response: any) => {
+        if (response.exists) {
+          // Provjeravamo da li su sva polja popunjena
+          if (response.allFieldsFilled) {
+            // Sva polja profila su popunjena, dobavljamo detalje profila
+            this.getProfileDetails();
+            // Onemogući editovanje profila ako su sva polja popunjena
+            this.editMode = false;
+          } else {
+            // Neka od polja profila nisu popunjena, omogućavamo editovanje profila
+            this.editMode = true;
+          }
+        } else {
+          // Profil ne postoji, omogućavamo editovanje profila
+          this.editMode = true;
+        }
+      }, (error: any) => {
+        console.error('Error checking profile fields', error);
+      });
   }
 
   onFileSelected(event: any) {
@@ -49,22 +72,28 @@ export class ProfilePage implements OnInit {
       this.createProfile();
     }
   }
-  createOrUpdateProfile() {
-    if (this.profileSaved) {
-      this.updateProfile();
-    } else {
-      this.createProfile();
-    }
-  }
 
   createProfile() {
-    this.profileService.updateProfile(this.profile)
+    // Provjeri da li već postoji profil s ovim emailom
+    this.profileService.checkUserByEmail(this.profile.email)
       .subscribe((response: any) => {
-        console.log('Profile updated successfully', response);
-        this.profileSaved = true;
-        this.editMode = false;
+        if (response.exists) {
+          // Profil već postoji, ne treba kreirati novi
+          console.log('Profile already exists');
+          this.editMode = false; // Onemogući editovanje profila jer već postoji
+        } else {
+          // Profil ne postoji, kreiraj novi
+          this.profileService.updateProfile(this.profile)
+            .subscribe((response: any) => {
+              console.log('Profile updated successfully', response);
+              this.profileSaved = true;
+              this.editMode = false;
+            }, (error: any) => {
+              console.error('Error updating profile', error);
+            });
+        }
       }, (error: any) => {
-        console.error('Error updating profile', error);
+        console.error('Error checking if profile exists', error);
       });
   }
 
@@ -101,7 +130,6 @@ export class ProfilePage implements OnInit {
       city: '',
       postal_code: '',
       phone_number: '',
-
     };
 
     localStorage.removeItem('userEmail');
@@ -118,5 +146,4 @@ export class ProfilePage implements OnInit {
       }
     );
   }
-
 }

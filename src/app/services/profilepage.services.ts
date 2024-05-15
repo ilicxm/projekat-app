@@ -18,6 +18,9 @@ export class ProfileService {
     return this.http.post(`${this.baseUrl}/checkUserByEmail`, { email });
   }
 
+  checkProfileFields(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/checkProfileFields`, { email });
+  }
   getProfileDetails(email: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/checkUserByEmail`, { email });
   }

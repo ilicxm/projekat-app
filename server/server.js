@@ -173,18 +173,18 @@ app.post('/checkout', (req, res) => {
 app.post('/checkUserByEmail', (req, res) => {
   const { email } = req.body;
 
-  // Query to check if a profile exists with the provided email
-  const checkProfileQuery = `SELECT * FROM profiles WHERE email = ?`;
+  // Query to check if a user exists with the provided email
+  const checkUserQuery = `SELECT * FROM users WHERE email = ?`;
 
   // Execute the query
-  connection.query(checkProfileQuery, [email], (error, results, fields) => {
+  connection.query(checkUserQuery, [email], (error, results, fields) => {
     if (error) {
-      console.error('Error checking user profile:', error);
+      console.error('Error checking user:', error);
       res.status(500).json({ error: 'Internal server error' });
       return;
     }
 
-    // If there are results, profile exists; otherwise, it doesn't
+    // If there are results, user exists; otherwise, it doesn't
     if (results.length > 0) {
       res.status(200).json({ exists: true });
     } else {
@@ -192,6 +192,7 @@ app.post('/checkUserByEmail', (req, res) => {
     }
   });
 });
+
 
 // Route to update user profile
 app.put('/updateProfile', (req, res) => {
@@ -240,5 +241,29 @@ app.post('/logout', (req, res) => {
   });
 });
 
+app.post('/checkProfileFields', (req, res) => {
+  const { email } = req.body;
 
+  // Query to check if a profile exists with the provided email
+  const checkProfileQuery = `SELECT * FROM profiles WHERE email = ?`;
+
+  // Execute the query
+  connection.query(checkProfileQuery, [email], (error, results, fields) => {
+    if (error) {
+      console.error('Error checking user profile:', error);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+
+    // If there are results, profile exists; otherwise, it doesn't
+    if (results.length > 0) {
+      const profile = results[0];
+      // Check if all required fields are filled
+      const allFieldsFilled = profile.address !== null && profile.city !== null && profile.postal_code !== null && profile.phone_number !== null;
+      res.status(200).json({ exists: true, profile, allFieldsFilled });
+    } else {
+      res.status(200).json({ exists: false });
+    }
+  });
+});
 module.exports = app;
