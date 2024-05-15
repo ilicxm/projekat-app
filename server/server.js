@@ -62,7 +62,6 @@ app.post('/register', (req, res) => {
 });
 
 // Login endpoint
-// Login endpoint
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -227,5 +226,19 @@ app.put('/updateProfile', (req, res) => {
     res.status(200).json({ message: 'Profile updated successfully' });
   });
 });
+
+// Logout endpoint
+app.post('/logout', (req, res) => {
+  // Destroy the session
+  req.session.destroy((error) => {
+    if (error) {
+      console.error('Error logging out:', error);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+    res.status(200).json({ message: 'Logout successful' });
+  });
+});
+
 
 module.exports = app;

@@ -21,5 +21,9 @@ export class ProfileService {
   getProfileDetails(email: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/checkUserByEmail`, { email });
   }
+
+  logout(): Observable<any> {
+    return this.http.post(`${this.baseUrl}/logout`, {});
+  }
 }
 

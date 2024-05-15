@@ -95,8 +95,28 @@ export class ProfilePage implements OnInit {
   }
 
   logout() {
+    // Clear profile data
+    this.profile = {
+      address: '',
+      city: '',
+      postal_code: '',
+      phone_number: '',
+
+    };
+
     localStorage.removeItem('userEmail');
-    console.log('User email removed from localStorage'); // Debug poruka
-    this.router.navigate(['/login']);
+    console.log('User email removed from localStorage');
+
+    // Call logout endpoint
+    this.profileService.logout().subscribe(
+      (response: any) => {
+        console.log('Logout successful', response);
+        this.router.navigate(['/login']);
+      },
+      (error: any) => {
+        console.error('Error logging out', error);
+      }
+    );
   }
+
 }
