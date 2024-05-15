@@ -10,12 +10,8 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  saveProfile(profileData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/profiles`, profileData);
-  }
-
   updateProfile(profileData: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/profiles/${profileData.email}`, profileData);
+    return this.http.put(`${this.baseUrl}/updateProfile`, profileData);
   }
 
   checkUserByEmail(email: string): Observable<any> {
@@ -23,12 +19,7 @@ export class ProfileService {
   }
 
   getProfileDetails(email: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/profiles/${email}`);
-  }
-
-  createProfile(profileData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/profiles`, profileData);
+    return this.http.post(`${this.baseUrl}/checkUserByEmail`, { email });
   }
 }
-
 

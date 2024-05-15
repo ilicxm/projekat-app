@@ -25,15 +25,12 @@ const connection = mysql.createConnection({
 });
 
 connection.connect();
-
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
-
-// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors()); // Enable CORS for all routes
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
 
 // Serve static files
 const staticPath = path.join(__dirname, 'www');
@@ -65,6 +62,7 @@ app.post('/register', (req, res) => {
 });
 
 // Login endpoint
+// Login endpoint
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -95,8 +93,8 @@ app.post('/login', (req, res) => {
           const userData = { email: email, name: user.name, profile: userProfile };
           req.session.email = email; // Store user's email in the session
 
+          // Send existing profile data to the client
           res.status(200).json({ message: 'Login successful', user: userData });
-          console.log(req.session.email);
         } else {
           // Profile doesn't exist, create it
           const userProfileData = { email: email, name: user.name };
@@ -109,7 +107,6 @@ app.post('/login', (req, res) => {
             const userData = { email: email, name: user.name, profile: userProfileData };
             req.session.email = email; // Store user's email in the session
             res.status(200).json({ message: 'Login successful', user: userData });
-            console.log(req.session.email);
           });
         }
       });
@@ -173,5 +170,62 @@ app.post('/checkout', (req, res) => {
   });
 });
 
-module.exports = app;
+// Route to check if user profile exists by email
+app.post('/checkUserByEmail', (req, res) => {
+  const { email } = req.body;
 
+  // Query to check if a profile exists with the provided email
+  const checkProfileQuery = `SELECT * FROM profiles WHERE email = ?`;
+
+  // Execute the query
+  connection.query(checkProfileQuery, [email], (error, results, fields) => {
+    if (error) {
+      console.error('Error checking user profile:', error);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+
+    // If there are results, profile exists; otherwise, it doesn't
+    if (results.length > 0) {
+      res.status(200).json({ exists: true });
+    } else {
+      res.status(200).json({ exists: false });
+    }
+  });
+});
+
+// Route to update user profile
+app.put('/updateProfile', (req, res) => {
+  const { email, address, city, postal_code, phone_number } = req.body;
+
+  // Check if all required fields are provided
+  if (!email || !address || !city || !postal_code || !phone_number) {
+    res.status(400).json({ error: 'All fields are required' });
+    return;
+  }
+
+  // Update query
+  const updateProfileQuery = `
+    UPDATE profiles
+    SET address = ?, city = ?, postal_code = ?, phone_number = ?
+    WHERE email = ?`;
+
+  // Execute the query
+  connection.query(updateProfileQuery, [address, city, postal_code, phone_number, email], (error, results, fields) => {
+    if (error) {
+      console.error('Error updating profile:', error);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+
+    // Check if any rows were affected
+    if (results.affectedRows === 0) {
+      res.status(404).json({ error: 'Profile not found for the provided email' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Profile updated successfully' });
+  });
+});
+
+module.exports = app;

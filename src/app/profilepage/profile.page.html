@@ -15,7 +15,8 @@
     <!-- Profile Picture -->
     <div class="profile-picture">
       <div class="profile-picture-frame">
-        <ion-img [src]="profile.picture" *ngIf="profile.picture"></ion-img>
+        <ion-img [src]="profile.picture" *ngIf="profile && profile.picture"></ion-img>
+
       </div>
       <input type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!profile.picture || editMode">
     </div>

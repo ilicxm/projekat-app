@@ -30,6 +30,9 @@ export class LoginPage {
         console.log('Response from server:', response);
         if (response && response.message === 'Login successful') {
           console.log('Uspesno!');
+          // Postavljamo e-mail korisnika u localStorage
+          localStorage.setItem('userEmail', this.email);
+          console.log('User email set in localStorage:', this.email); // Debug poruka
           this.router.navigate(['/tabs']);
         } else {
           console.log('Login failed. Invalid email or password.');

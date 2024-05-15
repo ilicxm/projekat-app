@@ -16,13 +16,21 @@ export class ProfilePage implements OnInit {
     city: '',
     postal_code: '',
     email: '',
-    phone_number: ''
+    phone_number: '',
+    picture: ''
   };
   profileSaved: boolean = false;
   editMode: boolean = false;
 
   ngOnInit() {
-    this.getUserProfile();
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+      this.profile.email = userEmail;
+      console.log('User email found:', userEmail); // Debug poruka
+      this.getProfileDetails();
+    } else {
+      console.error('User email not found in localStorage'); // Debug poruka
+    }
   }
 
   onFileSelected(event: any) {
@@ -38,41 +46,25 @@ export class ProfilePage implements OnInit {
     if (this.profileSaved) {
       this.updateProfile();
     } else {
-      this.createOrUpdateProfile();
+      this.createProfile();
     }
   }
-
-  getUserProfile() {
-    const userEmail = localStorage.getItem('userEmail');
-
-    if (!userEmail) {
-      console.error('User email not found');
-      return;
-    }
-
-    this.profile.email = userEmail; // Postavljamo email u profil prije poziva funkcije
-    this.createOrUpdateProfile(); // Pozivamo funkciju nakon što je email postavljen
-  }
-
   createOrUpdateProfile() {
-    const userEmail = this.profile.email;
-
-    if (!userEmail) {
-      console.error('User email not provided');
-      return;
+    if (this.profileSaved) {
+      this.updateProfile();
+    } else {
+      this.createProfile();
     }
+  }
 
-    this.profileService.checkUserByEmail(userEmail)
+  createProfile() {
+    this.profileService.updateProfile(this.profile)
       .subscribe((response: any) => {
-        if (response.exists) {
-          console.log('User profile already exists');
-          this.updateProfile();
-        } else {
-          console.log('Creating new user profile');
-          this.createProfile();
-        }
+        console.log('Profile updated successfully', response);
+        this.profileSaved = true;
+        this.editMode = false;
       }, (error: any) => {
-        console.error('Error checking user profile', error);
+        console.error('Error updating profile', error);
       });
   }
 
@@ -87,38 +79,24 @@ export class ProfilePage implements OnInit {
       });
   }
 
-  createProfile() {
-    this.profileService.createProfile(this.profile)
+  getProfileDetails() {
+    this.profileService.getProfileDetails(this.profile.email)
       .subscribe((response: any) => {
-        console.log('Profile successfully created', response);
-        this.profileSaved = true;
-        this.editMode = false;
+        console.log('Profile details retrieved successfully', response);
+        if (response.profile && response.profile.picture) {
+          this.profile = response.profile;
+          this.profileSaved = true;
+        } else {
+          console.error('Profile picture not found in response');
+        }
       }, (error: any) => {
-        console.error('Error creating profile', error);
+        console.error('Error getting profile details', error);
       });
   }
 
   logout() {
     localStorage.removeItem('userEmail');
-    this.profile = {
-      name: '',
-      address: '',
-      city: '',
-      postal_code: '',
-      email: '',
-      phone_number: ''
-    };
+    console.log('User email removed from localStorage'); // Debug poruka
     this.router.navigate(['/login']);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
