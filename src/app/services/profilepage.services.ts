@@ -22,14 +22,13 @@ export class ProfileService {
     return this.http.post(`${this.baseUrl}/checkUserByEmail`, { email });
   }
 
+  getProfileDetails(email: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/profiles/${email}`);
+  }
 
   createProfile(profileData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/profiles`, profileData);
   }
-
-  getUserProfile(email: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/getUserProfile`, { email });
-  }
-
 }
+
 

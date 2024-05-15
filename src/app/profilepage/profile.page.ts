@@ -50,20 +50,10 @@ export class ProfilePage implements OnInit {
       return;
     }
 
-    this.profileService.checkUserByEmail(userEmail)
-      .subscribe((response: any) => {
-        console.log('User profile:', response);
-        if (response.exists) {
-          // Postoji profil, možeš ga dohvatiti ako je potrebno
-          // Implementiraj logiku za dohvatanje profila ako je potrebno
-        } else {
-          console.log('User profile does not exist');
-          // Profil ne postoji, možeš izvršiti odgovarajuće akcije
-        }
-      }, (error: any) => {
-        console.error('Error checking user profile', error);
-      });
+    this.profile.email = userEmail; // Postavljamo email u profil prije poziva funkcije
+    this.createOrUpdateProfile(); // Pozivamo funkciju nakon što je email postavljen
   }
+
   createOrUpdateProfile() {
     const userEmail = this.profile.email;
 
@@ -98,8 +88,6 @@ export class ProfilePage implements OnInit {
   }
 
   createProfile() {
-    const userEmail = this.profile.email;
-
     this.profileService.createProfile(this.profile)
       .subscribe((response: any) => {
         console.log('Profile successfully created', response);
@@ -111,10 +99,7 @@ export class ProfilePage implements OnInit {
   }
 
   logout() {
-    // Brisanje email adrese iz localStorage prilikom odjave
     localStorage.removeItem('userEmail');
-
-    // Resetovanje profila na prazne vrednosti
     this.profile = {
       name: '',
       address: '',
@@ -123,11 +108,15 @@ export class ProfilePage implements OnInit {
       email: '',
       phone_number: ''
     };
-
-    // Preusmeravanje na login stranicu
     this.router.navigate(['/login']);
   }
 }
+
+
+
+
+
+
 
 
 

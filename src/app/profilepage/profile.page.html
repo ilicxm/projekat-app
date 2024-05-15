@@ -23,7 +23,8 @@
     <!-- Name, Address, City, Postal Code, Email, Phone Number -->
     <ion-item>
       <ion-label position="floating">Name</ion-label>
-      <ion-input [(ngModel)]="profile.name" [disabled]="!editMode"></ion-input>
+      <ion-input [(ngModel)]="profile.name" *ngIf="!editMode"></ion-input>
+      <ion-label>{{ profile.name }}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Address</ion-label>
@@ -39,7 +40,8 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Email</ion-label>
-      <ion-input [(ngModel)]="profile.email" [disabled]="!editMode"></ion-input>
+      <ion-input [(ngModel)]="profile.email" *ngIf="!editMode"></ion-input>
+      <ion-label>{{ profile.email }}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Phone Number</ion-label>
