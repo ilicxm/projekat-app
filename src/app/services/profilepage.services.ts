@@ -28,7 +28,8 @@ export class ProfileService {
   }
 
   getUserProfile(email: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/profiles/${email}`);
+    return this.http.post(`${this.baseUrl}/getUserProfile`, { email });
   }
+
 }
 

@@ -50,16 +50,20 @@ export class ProfilePage implements OnInit {
       return;
     }
 
-    this.profileService.getUserProfile(userEmail)
+    this.profileService.checkUserByEmail(userEmail)
       .subscribe((response: any) => {
         console.log('User profile:', response);
-        this.profile = response.user; // Promenjeno sa response.profile na response.user
-        this.profileSaved = true;
+        if (response.exists) {
+          // Postoji profil, možeš ga dohvatiti ako je potrebno
+          // Implementiraj logiku za dohvatanje profila ako je potrebno
+        } else {
+          console.log('User profile does not exist');
+          // Profil ne postoji, možeš izvršiti odgovarajuće akcije
+        }
       }, (error: any) => {
-        console.error('Error getting user profile', error);
+        console.error('Error checking user profile', error);
       });
   }
-
   createOrUpdateProfile() {
     const userEmail = this.profile.email;
 

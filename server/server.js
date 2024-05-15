@@ -71,7 +71,7 @@ app.post('/login', (req, res) => {
         if (profileResults.length > 0) {
           // Profil već postoji
           const userProfile = profileResults[0];
-          const userData = { ...user, profile: userProfile };
+          const userData = Object.assign({}, user, { profile: insertResult });
           res.status(200).json({ message: 'Login successful', user: userData });
         } else {
           // Profil ne postoji, treba ga kreirati
@@ -82,7 +82,7 @@ app.post('/login', (req, res) => {
               res.status(500).json({ error: 'Internal server error' });
               return;
             }
-            const userData = { ...user, profile: userProfileData };
+            const userData = ({}, user, {profile: userProfileData} );
             res.status(200).json({ message: 'Login successful', user: userData });
           });
         }
@@ -127,7 +127,7 @@ app.post('/checkout', (req, res) => {
 // Check user by email endpoint
 app.post('/checkUserByEmail', (req, res) => {
   const { email } = req.body;
-  const query = `SELECT * FROM users WHERE email = ?`;
+  const query = `SELECT * FROM profiles WHERE email = ?`;
   connection.query(query, [email], (error, results, fields) => {
     if (error) {
       console.error('Error checking user by email:', error);
