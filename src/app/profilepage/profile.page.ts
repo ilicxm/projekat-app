@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService } from '../services/profilepage.services';
+import { OrderService } from '../services/order.services';
 
 @Component({
   selector: 'app-profile',
@@ -8,8 +9,6 @@ import { ProfileService } from '../services/profilepage.services';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  constructor(private router: Router, private profileService: ProfileService) {}
-
   profile: any = {
     name: '',
     address: '',
@@ -21,16 +20,33 @@ export class ProfilePage implements OnInit {
   };
   profileSaved: boolean = false;
   editMode: boolean = false;
+  orders: any[] = [];
+
+  constructor(
+    private router: Router,
+    private profileService: ProfileService,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit() {
     const userEmail = localStorage.getItem('userEmail');
     if (userEmail) {
       this.profile.email = userEmail;
-      console.log('User email found:', userEmail); // Debug poruka
       this.checkProfileFields(userEmail);
+      this.loadOrders(userEmail);
     } else {
-      console.error('User email not found in localStorage'); // Debug poruka
+      console.error('User email not found in localStorage');
     }
+  }
+
+
+  loadOrders(email: string) {
+    this.orderService.getOrders(email)
+      .subscribe((response: any) => {
+        this.orders = response;
+      }, (error: any) => {
+        console.error('Error loading orders', error);
+      });
   }
 
   checkProfileFields(email: string) {

@@ -140,12 +140,14 @@ app.put('/profile', (req, res) => {
   });
 });
 
-// Checkout endpoint
 app.post('/checkout', (req, res) => {
   const { cartItems, customer, paymentMethod, deliveryDate } = req.body;
 
   // Constructing the description of items in the order
   const description = cartItems.map(item => `${item.name} (${item.quantity})`).join(', ');
+
+  // Učitavanje e-pošte iz sesije
+  const email = req.session.email;
 
   const order = {
     description,
@@ -154,12 +156,13 @@ app.post('/checkout', (req, res) => {
     address: customer.address,
     phone_number: customer.phone,
     date_of_delivery: new Date(deliveryDate),
-    payment_method: paymentMethod
+    payment_method: paymentMethod,
+    email: email // Dodavanje e-pošte u objekat narudžbine
   };
 
-  const query = `INSERT INTO orders (description, name, surname, address, phone_number, date_of_delivery, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  const query = `INSERT INTO orders (description, name, surname, address, phone_number, date_of_delivery, payment_method, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
-  connection.query(query, [order.description, order.name, order.surname, order.address, order.phone_number, order.date_of_delivery, order.payment_method], (error, results, fields) => {
+  connection.query(query, [order.description, order.name, order.surname, order.address, order.phone_number, order.date_of_delivery, order.payment_method, order.email], (error, results, fields) => {
     if (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal server error' });
@@ -168,6 +171,7 @@ app.post('/checkout', (req, res) => {
     res.status(200).json({ message: 'Order placed successfully' });
   });
 });
+
 
 // Route to check if user profile exists by email
 app.post('/checkUserByEmail', (req, res) => {
@@ -192,7 +196,6 @@ app.post('/checkUserByEmail', (req, res) => {
     }
   });
 });
-
 
 // Route to update user profile
 app.put('/updateProfile', (req, res) => {
@@ -241,6 +244,7 @@ app.post('/logout', (req, res) => {
   });
 });
 
+// Route to check if profile fields are filled
 app.post('/checkProfileFields', (req, res) => {
   const { email } = req.body;
 
@@ -266,4 +270,21 @@ app.post('/checkProfileFields', (req, res) => {
     }
   });
 });
+
+// Route to get orders by email
+app.get('/orders/:email', (req, res) => {
+  const email = req.params.email;
+  const query = `SELECT * FROM orders WHERE email = ?`;
+
+  connection.query(query, [email], (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+    res.status(200).json(results);
+  });
+});
+
 module.exports = app;
+

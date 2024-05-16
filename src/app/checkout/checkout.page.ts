@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OrderService } from '../services/checkout.services';
 
@@ -10,7 +10,6 @@ export interface Product {
   quantity: number;
 }
 
-// Interface for customer details
 export interface Customer {
   name: string;
   surname: string;
@@ -19,7 +18,6 @@ export interface Customer {
   phone: string;
 }
 
-// Interface for credit card details
 interface CreditCard {
   number: string;
   cvc: string;
@@ -32,50 +30,55 @@ interface CreditCard {
   templateUrl: './checkout.page.html',
   styleUrls: ['./checkout.page.scss'],
 })
-export class CheckoutPage {
+export class CheckoutPage implements OnInit {
 
-  cartItems: Product[] = []; // Define cartItems array
+  cartItems: Product[] = [];
   customer: Customer = { name: '', surname: '', address: '', email: '', phone: '' };
-  paymentMethod: string = 'invoice'; // Default payment method
-  creditCard: CreditCard = { number: '', cvc: '', cardholderName: '', expiryDate: '' }; // Credit card details
-  deliveryDate: string;
+  paymentMethod: string = 'invoice';
+  creditCard: CreditCard = { number: '', cvc: '', cardholderName: '', expiryDate: '' };
+  deliveryDate: string = new Date().toISOString();
 
-  constructor(private router: Router, private route: ActivatedRoute, private orderService: OrderService ) {
-    // Retrieve cart items from query params
-    this.deliveryDate = new Date().toISOString();
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private orderService: OrderService
+  ) {}
+
+  ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params && params['cartItems']) { // Accessing using square brackets
-        this.cartItems = JSON.parse(params['cartItems']); // Accessing using square brackets
+      if (params && params['cartItems']) {
+        this.cartItems = JSON.parse(params['cartItems']);
       }
     });
+
+    // Učitavanje e-pošte iz sessionStorage
+    const storedEmail = sessionStorage.getItem('email');
+    if (storedEmail) {
+      this.customer.email = storedEmail;
+    }
   }
 
   getTotalPrice(): number {
-    // Implementation for calculating total price
     return this.cartItems.reduce((total, item) => {
       return total + (parseFloat(item.price.replace('$', '')) * item.quantity);
     }, 0);
   }
 
   navigateToTab2() {
-    // Implementation for navigating to Tab2 page
     this.router.navigate(['/tabs/tab2']);
   }
 
   decreaseQuantity(item: Product) {
-    // Implementation for decreasing quantity of an item
     if (item.quantity > 1) {
       item.quantity--;
     }
   }
 
   increaseQuantity(item: Product) {
-    // Implementation for increasing quantity of an item
     item.quantity++;
   }
 
   removeFromCart(item: Product) {
-    // Implementation for removing an item from the cart
     const index = this.cartItems.indexOf(item);
     if (index !== -1) {
       this.cartItems.splice(index, 1);
@@ -83,12 +86,20 @@ export class CheckoutPage {
   }
 
   placeOrder() {
+    // Ažuriranje customer.email ako je prazan
+    if (!this.customer.email) {
+      const storedEmail = sessionStorage.getItem('email');
+      if (storedEmail) {
+        this.customer.email = storedEmail;
+      }
+    }
+
+    // Prosleđivanje e-pošte sačuvane u sessionStorage
     this.orderService.placeOrder(this.cartItems, this.customer, this.paymentMethod, this.deliveryDate)
       .subscribe(
         response => {
           console.log('Order placed successfully', response);
-          // Preusmeravanje na stranicu Confirm ako je narudžbina uspešno poslata
-          this.router.navigate(['/confirm']); // Promenite '/confirm' prema vašoj konfiguraciji ruta
+          this.router.navigate(['/confirm']);
         },
         error => {
           console.error('Error placing order', error);
@@ -98,3 +109,9 @@ export class CheckoutPage {
   }
 
 }
+
+
+
+
+
+

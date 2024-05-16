@@ -16,7 +16,6 @@
     <div class="profile-picture">
       <div class="profile-picture-frame">
         <ion-img [src]="profile.picture" *ngIf="profile && profile.picture"></ion-img>
-
       </div>
       <input type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!profile.picture || editMode">
     </div>
@@ -49,6 +48,29 @@
       <ion-input [(ngModel)]="profile.phone_number" [disabled]="!editMode"></ion-input>
     </ion-item>
   </div>
+
+  <!-- Order History -->
+  <div class="order-history">
+    <h2>Order History</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Description</th>
+        <th>Date of Delivery</th>
+        <th>Payment Method</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.orderid }}</td>
+        <td>{{ order.description }}</td>
+        <td>{{ order.date_of_delivery }}</td>
+        <td>{{ order.payment_method }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </ion-content>
 
 <ion-footer class="custom-footer">
@@ -59,4 +81,5 @@
     <ion-button expand="block" (click)="logout()">Logout</ion-button>
   </ion-toolbar>
 </ion-footer>
+
 
