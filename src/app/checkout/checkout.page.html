@@ -29,9 +29,9 @@
   </div>
 
   <!-- Sakrijemo polje za unos e-pošte i postavimo ga na vrednost iz sessionStorage -->
-  <ion-item *ngIf="customer.email">
+  <ion-item>
     <ion-label>Email</ion-label>
-    <ion-input type="email" disabled="true" [(ngModel)]="customer.email"></ion-input>
+    <ion-input type="email" [(ngModel)]="customer.email"></ion-input>
   </ion-item>
 
   <ion-item>

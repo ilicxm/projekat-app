@@ -13,12 +13,13 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  placeOrder(cartItems: Product[], customer: Customer, paymentMethod: string, deliveryDate: string): Observable<any> {
+  placeOrder(cartItems: Product[], customer: Customer, paymentMethod: string, deliveryDate: string, userEmail: string): Observable<any> {
     const orderData = {
       cartItems,
       customer,
       paymentMethod,
-      deliveryDate
+      deliveryDate,
+      userEmail // Dodajemo userEmail kao deo podataka o narudžbini
     };
     return this.http.post(`${this.baseUrl}/checkout`, orderData);
   }

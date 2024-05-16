@@ -14,8 +14,8 @@ export interface Customer {
   name: string;
   surname: string;
   address: string;
-  email: string;
   phone: string;
+  email: string;
 }
 
 interface CreditCard {
@@ -32,10 +32,11 @@ interface CreditCard {
 })
 export class CheckoutPage implements OnInit {
   cartItems: Product[] = [];
-  customer: Customer = { name: '', surname: '', address: '', email: '', phone: '' };
+  customer: Customer = { name: '', surname: '', address: '', phone: '', email:'' };
   paymentMethod: string = 'invoice';
   creditCard: CreditCard = { number: '', cvc: '', cardholderName: '', expiryDate: '' };
   deliveryDate: string = new Date().toISOString();
+  userEmail: string = ''; // Dodata promenljiva za email
 
   constructor(
     private router: Router,
@@ -49,13 +50,6 @@ export class CheckoutPage implements OnInit {
         this.cartItems = JSON.parse(params['cartItems']);
       }
     });
-
-    // Učitavanje e-pošte iz sesije
-    const storedEmail = localStorage.getItem('email');
-    console.log('Email za order', storedEmail);
-    if (storedEmail) {
-      this.customer.email = storedEmail;
-    }
   }
 
   getTotalPrice(): number {
@@ -86,30 +80,15 @@ export class CheckoutPage implements OnInit {
   }
 
   placeOrder() {
-    // Retrieve user email from localStorage
-    const userEmail = localStorage.getItem('email');
-    console.log('Email za order', userEmail);
-
-    if (!userEmail) {
+    if (!this.customer.email) {
       console.error('User email not provided');
       return;
     }
 
-    // Continue with the ordering process
-    this.orderService.placeOrder(this.cartItems, this.customer, this.paymentMethod, this.deliveryDate)
+    this.orderService.placeOrder(this.cartItems, this.customer, this.paymentMethod, this.deliveryDate, this.customer.email) // Prosleđujemo this.customer.email
       .subscribe(
         response => {
           console.log('Order placed successfully', response);
-          // Store the order with the retrieved email
-          this.orderService.getOrders(userEmail).subscribe(
-            orders => {
-              localStorage.setItem('orders', JSON.stringify(orders));
-            },
-            error => {
-              console.error('Error retrieving orders', error);
-              // Handle error
-            }
-          );
           this.router.navigate(['/confirm']);
         },
         error => {
@@ -118,7 +97,4 @@ export class CheckoutPage implements OnInit {
         }
       );
   }
-
-
-
 }

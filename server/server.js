@@ -317,10 +317,9 @@ app.post('/checkout', (req, res) => {
   });
 });
 
-
 // Route to get orders by email
 app.get('/orders/:email', (req, res) => {
-  const email = localStorage.getItem('email'); // Učitavanje e-pošte iz sesije
+  const email = req.params.email; // Koristi email adresu iz URL parametra
   // Use the email parameter from the request
   const query = `SELECT * FROM orders WHERE email = ?`;
 
