@@ -31,7 +31,6 @@ interface CreditCard {
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
-
   cartItems: Product[] = [];
   customer: Customer = { name: '', surname: '', address: '', email: '', phone: '' };
   paymentMethod: string = 'invoice';
@@ -51,8 +50,9 @@ export class CheckoutPage implements OnInit {
       }
     });
 
-    // Učitavanje e-pošte iz sessionStorage
-    const storedEmail = sessionStorage.getItem('email');
+    // Učitavanje e-pošte iz sesije
+    const storedEmail = localStorage.getItem('email');
+    console.log('Email za order', storedEmail);
     if (storedEmail) {
       this.customer.email = storedEmail;
     }
@@ -86,32 +86,39 @@ export class CheckoutPage implements OnInit {
   }
 
   placeOrder() {
-    // Ažuriranje customer.email ako je prazan
-    if (!this.customer.email) {
-      const storedEmail = sessionStorage.getItem('email');
-      if (storedEmail) {
-        this.customer.email = storedEmail;
-      }
+    // Retrieve user email from localStorage
+    const userEmail = localStorage.getItem('email');
+    console.log('Email za order', userEmail);
+
+    if (!userEmail) {
+      console.error('User email not provided');
+      return;
     }
 
-    // Prosleđivanje e-pošte sačuvane u sessionStorage
+    // Continue with the ordering process
     this.orderService.placeOrder(this.cartItems, this.customer, this.paymentMethod, this.deliveryDate)
       .subscribe(
         response => {
           console.log('Order placed successfully', response);
+          // Store the order with the retrieved email
+          this.orderService.getOrders(userEmail).subscribe(
+            orders => {
+              localStorage.setItem('orders', JSON.stringify(orders));
+            },
+            error => {
+              console.error('Error retrieving orders', error);
+              // Handle error
+            }
+          );
           this.router.navigate(['/confirm']);
         },
         error => {
           console.error('Error placing order', error);
-          // Handle error response
+          // Handle error
         }
       );
   }
 
+
+
 }
-
-
-
-
-
-

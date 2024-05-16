@@ -22,6 +22,9 @@ export class OrderService {
     };
     return this.http.post(`${this.baseUrl}/checkout`, orderData);
   }
+  getOrders(email: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/orders/${email}`);
+  }
 }
 
 

@@ -1,7 +1,10 @@
+// profile.page.ts
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService } from '../services/profilepage.services';
 import { OrderService } from '../services/order.services';
+import { Product, Customer } from '../checkout/checkout.page'; // Adjust the path if needed
 
 @Component({
   selector: 'app-profile',
@@ -38,7 +41,6 @@ export class ProfilePage implements OnInit {
       console.error('User email not found in localStorage');
     }
   }
-
 
   loadOrders(email: string) {
     this.orderService.getOrders(email)
@@ -162,4 +164,34 @@ export class ProfilePage implements OnInit {
       }
     );
   }
+
+  checkout() {
+    // Skupljanje informacija o korisniku i porudžbini
+    const customer: Customer = {
+      name: this.profile.name,
+      surname: '', // Dodajte prezime ako je potrebno
+      address: this.profile.address,
+      phone: this.profile.phone_number,
+      email: this.profile.email // Uključite svojstvo e-pošte
+    };
+
+    const cartItems: Product[] = []; // Dodajte logiku za skupljanje stavki u korpi
+
+    const paymentMethod = ''; // Dodajte logiku za odabir načina plaćanja
+
+    const deliveryDate = ''; // Dodajte logiku za odabir datuma isporuke
+
+    // Poziv servisa za kreiranje porudžbine
+    this.orderService.placeOrder(cartItems, customer, paymentMethod, deliveryDate)
+      .subscribe((response: any) => {
+        console.log('Order placed successfully', response);
+        // Opciono: Obavestite korisnika o uspešnom naručivanju
+      }, (error: any) => {
+        console.error('Error placing order', error);
+        // Opciono: Obavestite korisnika o grešci prilikom naručivanja
+      });
+  }
+
 }
+
+

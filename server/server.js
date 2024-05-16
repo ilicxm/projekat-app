@@ -55,7 +55,7 @@ app.post('/register', (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
         return;
       }
-
+      req.session.email = email;
       res.status(200).json({ message: 'User registered successfully' });
     });
   });
@@ -90,10 +90,12 @@ app.post('/login', (req, res) => {
           // Profile exists
           const userProfile = profileResults[0];
           const userData = { email: email, name: user.name, profile: userProfile };
-          req.session.email = email; // Store user's email in the session
 
-          // Send existing profile data to the client
-          res.status(200).json({ message: 'Login successful', user: userData });
+          // Send user email back to client
+          const userEmail = email;
+
+          // Send existing profile data and user email to the client
+          res.status(200).json({ message: 'Login successful', userEmail: userEmail, user: userData });
         } else {
           // Profile doesn't exist, create it
           const userProfileData = { email: email, name: user.name };
@@ -104,8 +106,11 @@ app.post('/login', (req, res) => {
               return;
             }
             const userData = { email: email, name: user.name, profile: userProfileData };
-            req.session.email = email; // Store user's email in the session
-            res.status(200).json({ message: 'Login successful', user: userData });
+
+            // Send user email back to client
+            const userEmail = email;
+
+            res.status(200).json({ message: 'Login successful', userEmail: userEmail, user: userData });
           });
         }
       });
@@ -140,37 +145,37 @@ app.put('/profile', (req, res) => {
   });
 });
 
-app.post('/checkout', (req, res) => {
-  const { cartItems, customer, paymentMethod, deliveryDate } = req.body;
+// Checkout endpoint
+// app.post('/checkout', (req, res) => {
+//   const { cartItems, customer, paymentMethod, deliveryDate } = req.body;
+//   const email = req.session.email; // Učitavanje e-pošte iz sesije
+//
+//   // Constructing the description of items in the order
+//   const description = cartItems.map(item => `${item.name} (${item.quantity})`).join(', ');
+//
+//   const order = {
+//     description,
+//     name: customer.name,
+//     surname: customer.surname,
+//     address: customer.address,
+//     phone_number: customer.phone,
+//     date_of_delivery: new Date(deliveryDate),
+//     payment_method: paymentMethod,
+//     email: email // Dodavanje e-pošte u objekat narudžbine
+//   };
+//
+//   const query = `INSERT INTO orders (description, name, surname, address, phone_number, date_of_delivery, payment_method, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+//
+//   connection.query(query, [order.description, order.name, order.surname, order.address, order.phone_number, order.date_of_delivery, order.payment_method, order.email], (error, results, fields) => {
+//     if (error) {
+//       console.error(error);
+//       res.status(500).json({ error: 'Internal server error' });
+//       return;
+//     }
+//     res.status(200).json({ message: 'Order placed successfully' });
+//   });
+// });
 
-  // Constructing the description of items in the order
-  const description = cartItems.map(item => `${item.name} (${item.quantity})`).join(', ');
-
-  // Učitavanje e-pošte iz sesije
-  const email = req.session.email;
-
-  const order = {
-    description,
-    name: customer.name,
-    surname: customer.surname,
-    address: customer.address,
-    phone_number: customer.phone,
-    date_of_delivery: new Date(deliveryDate),
-    payment_method: paymentMethod,
-    email: email // Dodavanje e-pošte u objekat narudžbine
-  };
-
-  const query = `INSERT INTO orders (description, name, surname, address, phone_number, date_of_delivery, payment_method, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-
-  connection.query(query, [order.description, order.name, order.surname, order.address, order.phone_number, order.date_of_delivery, order.payment_method, order.email], (error, results, fields) => {
-    if (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-      return;
-    }
-    res.status(200).json({ message: 'Order placed successfully' });
-  });
-});
 
 
 // Route to check if user profile exists by email
@@ -272,19 +277,62 @@ app.post('/checkProfileFields', (req, res) => {
 });
 
 // Route to get orders by email
+// Checkout endpoint
+// Checkout endpoint
+// Checkout endpoint
+// Checkout endpoint
+// Checkout endpoint
+app.post('/checkout', (req, res) => {
+  const { cartItems, customer, paymentMethod, deliveryDate, userEmail } = req.body;
+
+  const email = userEmail; // Koristi email prosleđen u zahtevu
+  console.log('Email za order', email);
+  if (!email) {
+    // Ako nije pružena e-pošta, vrati grešku
+    return res.status(400).json({ error: 'User email is required' });
+  }
+
+  // Konstruisanje opisa stavki u porudžbini
+  const description = cartItems.map(item => `${item.name} (${item.quantity})`).join(', ');
+
+  const order = {
+    description,
+    name: customer.name,
+    surname: customer.surname,
+    address: customer.address,
+    phone_number: customer.phone,
+    date_of_delivery: new Date(deliveryDate),
+    payment_method: paymentMethod,
+    email: email // Dodavanje e-pošte u objekat narudžbine
+  };
+
+  const query = `INSERT INTO orders (description, name, surname, address, phone_number, date_of_delivery, payment_method, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  connection.query(query, [order.description, order.name, order.surname, order.address, order.phone_number, order.date_of_delivery, order.payment_method, order.email], (error, results, fields) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.status(200).json({ message: 'Order placed successfully' });
+  });
+});
+
+
+// Route to get orders by email
 app.get('/orders/:email', (req, res) => {
-  const email = req.params.email;
+  const email = localStorage.getItem('email'); // Učitavanje e-pošte iz sesije
+  // Use the email parameter from the request
   const query = `SELECT * FROM orders WHERE email = ?`;
 
   connection.query(query, [email], (error, results, fields) => {
     if (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-      return;
+      return res.status(500).json({ error: 'Internal server error' });
     }
     res.status(200).json(results);
   });
 });
+
 
 module.exports = app;
 
