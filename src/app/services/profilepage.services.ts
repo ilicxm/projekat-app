@@ -22,7 +22,7 @@ export class ProfileService {
     return this.http.post(`${this.baseUrl}/checkProfileFields`, { email });
   }
   getProfileDetails(email: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/checkUserByEmail`, { email });
+    return this.http.post(`${this.baseUrl}/getProfileDetails`, { email });
   }
 
   logout(): Observable<any> {

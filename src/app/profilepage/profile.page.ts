@@ -32,15 +32,41 @@ export class ProfilePage implements OnInit {
   ) {}
 
   ngOnInit() {
+
     const userEmail = localStorage.getItem('userEmail');
+
+    console.log('Email prijavljenog kroisnika',userEmail);
     if (userEmail) {
       this.profile.email = userEmail;
       this.checkProfileFields(userEmail);
+
       this.loadOrders(userEmail);
     } else {
       console.error('User email not found in localStorage');
     }
   }
+
+
+  checkProfileFields(email: string) {
+    this.profileService.checkProfileFields(email)
+      .subscribe((response: any) => {
+        if (response.exists) {
+          if (response.allFieldsFilled) {
+            this.getProfileDetails();
+
+
+            this.editMode = false; // Postavljamo editMode na false samo ako su sva polja popunjena
+          } else {
+            this.editMode = true;
+          }
+        } else {
+          this.editMode = true;
+        }
+      }, (error: any) => {
+        console.error('Error checking profile fields', error);
+      });
+  }
+
 
   loadOrders(email: string) {
     this.orderService.getOrders(email)
@@ -51,28 +77,6 @@ export class ProfilePage implements OnInit {
       });
   }
 
-  checkProfileFields(email: string) {
-    this.profileService.checkProfileFields(email)
-      .subscribe((response: any) => {
-        if (response.exists) {
-          // Provjeravamo da li su sva polja popunjena
-          if (response.allFieldsFilled) {
-            // Sva polja profila su popunjena, dobavljamo detalje profila
-            this.getProfileDetails();
-            // Onemogući editovanje profila ako su sva polja popunjena
-            this.editMode = false;
-          } else {
-            // Neka od polja profila nisu popunjena, omogućavamo editovanje profila
-            this.editMode = true;
-          }
-        } else {
-          // Profil ne postoji, omogućavamo editovanje profila
-          this.editMode = true;
-        }
-      }, (error: any) => {
-        console.error('Error checking profile fields', error);
-      });
-  }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -130,7 +134,7 @@ export class ProfilePage implements OnInit {
     this.profileService.getProfileDetails(this.profile.email)
       .subscribe((response: any) => {
         console.log('Profile details retrieved successfully', response);
-        if (response.profile && response.profile.picture) {
+        if (response.profile) {
           this.profile = response.profile;
           this.profileSaved = true;
         } else {

@@ -255,7 +255,7 @@ app.post('/checkProfileFields', (req, res) => {
 
   // Query to check if a profile exists with the provided email
   const checkProfileQuery = `SELECT * FROM profiles WHERE email = ?`;
-
+console.log(email);
   // Execute the query
   connection.query(checkProfileQuery, [email], (error, results, fields) => {
     if (error) {
@@ -329,6 +329,30 @@ app.get('/orders/:email', (req, res) => {
       return res.status(500).json({ error: 'Internal server error' });
     }
     res.status(200).json(results);
+  });
+});
+// Route to get profile details by email
+app.post('/getProfileDetails', (req, res) => {
+  const { email } = req.body;
+
+  // Query to get profile details by email
+  const getProfileDetailsQuery = `SELECT * FROM profiles WHERE email = ?`;
+
+  // Execute the query
+  connection.query(getProfileDetailsQuery, [email], (error, results, fields) => {
+    if (error) {
+      console.error('Error getting profile details:', error);
+      res.status(500).json({ error: 'Internal server error' });
+      return;
+    }
+
+    // If profile exists, send profile details to client
+    if (results.length > 0) {
+      const profileDetails = results[0];
+      res.status(200).json({ message: 'Profile details retrieved successfully', profile: profileDetails });
+    } else {
+      res.status(404).json({ error: 'Profile not found for the provided email' });
+    }
   });
 });
 
