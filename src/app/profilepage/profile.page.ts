@@ -39,7 +39,6 @@ export class ProfilePage implements OnInit {
     if (userEmail) {
       this.profile.email = userEmail;
       this.checkProfileFields(userEmail);
-
       this.loadOrders(userEmail);
     } else {
       console.error('User email not found in localStorage');
@@ -53,7 +52,6 @@ export class ProfilePage implements OnInit {
         if (response.exists) {
           if (response.allFieldsFilled) {
             this.getProfileDetails();
-
 
             this.editMode = false;
           } else {
@@ -99,9 +97,8 @@ export class ProfilePage implements OnInit {
 
     this.profileService.checkUserByEmail(this.profile.email)
       .subscribe((response: any) => {
-        if (response.exists) {
-
-          console.log('Profile already exists');
+        if (!response.exists) {
+          console.log('Profile dont exists');
           this.editMode = false;
         } else {
 
@@ -195,6 +192,19 @@ export class ProfilePage implements OnInit {
       });
   }
 
+
+  deleteSelectedOrders() {
+    const selectedOrders = this.orders.filter(order => order.selected);
+    const orderIds = selectedOrders.map(order => order.orderid);
+
+    this.orderService.deleteOrders(orderIds)
+      .subscribe((response: any) => {
+        console.log('Orders deleted successfully', response);
+        this.orders = this.orders.filter(order => !order.selected);
+      }, (error: any) => {
+        console.error('Error deleting orders', error);
+      });
+  }
 }
 
 

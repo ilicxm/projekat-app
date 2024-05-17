@@ -50,27 +50,33 @@
   </div>
 
 
-  <div class="order-history">
-    <h2>Order History</h2>
-    <table>
-      <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Description</th>
-        <th>Date of Delivery</th>
-        <th>Payment Method</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let order of orders">
-        <td>{{ order.orderid }}</td>
-        <td>{{ order.description }}</td>
-        <td>{{ order.date_of_delivery }}</td>
-        <td>{{ order.payment_method }}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <ion-content>
+    <div class="order-history">
+      <h2>Order History</h2>
+      <table>
+        <thead>
+        <tr>
+          <th>Select</th>
+          <th>Order ID</th>
+          <th>Description</th>
+          <th>Date of Delivery</th>
+          <th>Payment Method</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let order of orders">
+          <td><input type="checkbox" [(ngModel)]="order.selected"></td>
+          <td>{{ order.orderid }}</td>
+          <td>{{ order.description }}</td>
+          <td>{{ order.date_of_delivery }}</td>
+          <td>{{ order.payment_method }}</td>
+        </tr>
+        </tbody>
+      </table>
+      <button (click)="deleteSelectedOrders()">Delete Orders</button>
+    </div>
+  </ion-content>
+
 </ion-content>
 
 <ion-footer class="custom-footer">

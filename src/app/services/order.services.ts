@@ -21,6 +21,9 @@ export class OrderService {
     return this.http.post(`${this.baseUrl}/checkout`, orderData);
   }
 
+  deleteOrders(orderIds: number[]): Observable<any> {
+    return this.http.post(`${this.baseUrl}/deleteOrders`, { orderIds });
+  }
   getOrders(email: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/orders/${email}`);
   }

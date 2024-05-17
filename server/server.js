@@ -209,7 +209,7 @@ app.post('/checkProfileFields', (req, res) => {
 
 
   const checkProfileQuery = `SELECT * FROM profiles WHERE email = ?`;
-console.log(email);
+  console.log(email);
 
   connection.query(checkProfileQuery, [email], (error, results, fields) => {
     if (error) {
@@ -301,6 +301,24 @@ app.post('/getProfileDetails', (req, res) => {
     } else {
       res.status(404).json({ error: 'Profile not found for the provided email' });
     }
+  });
+});
+app.post('/deleteOrders', (req, res) => {
+  const { orderIds } = req.body;
+
+  if (!orderIds || orderIds.length === 0) {
+    return res.status(400).json({ error: 'No order IDs provided' });
+  }
+
+  const query = 'DELETE FROM orders WHERE orderid IN (?)';
+
+  connection.query(query, [orderIds], (error, results) => {
+    if (error) {
+      console.error('Error deleting orders:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+
+    res.status(200).json({ message: 'Orders deleted successfully' });
   });
 });
 
