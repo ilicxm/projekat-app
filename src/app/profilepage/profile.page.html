@@ -12,7 +12,7 @@
 
 <ion-content>
   <div class="profile-info">
-    <!-- Profile Picture -->
+
     <div class="profile-picture">
       <div class="profile-picture-frame">
         <ion-img [src]="profile.picture" *ngIf="profile && profile.picture"></ion-img>
@@ -20,7 +20,7 @@
       <input type="file" accept="image/*" (change)="onFileSelected($event)" *ngIf="!profile.picture || editMode">
     </div>
 
-    <!-- Name, Address, City, Postal Code, Email, Phone Number -->
+
     <ion-item>
       <ion-label position="floating">Name</ion-label>
       <ion-input [(ngModel)]="profile.name" *ngIf="!editMode"></ion-input>
@@ -49,7 +49,7 @@
     </ion-item>
   </div>
 
-  <!-- Order History -->
+
   <div class="order-history">
     <h2>Order History</h2>
     <table>

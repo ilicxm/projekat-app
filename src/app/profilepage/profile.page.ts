@@ -1,10 +1,10 @@
-// profile.page.ts
+
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService } from '../services/profilepage.services';
 import { OrderService } from '../services/order.services';
-import { Product, Customer } from '../checkout/checkout.page'; // Adjust the path if needed
+import { Product, Customer } from '../checkout/checkout.page';
 
 @Component({
   selector: 'app-profile',
@@ -55,7 +55,7 @@ export class ProfilePage implements OnInit {
             this.getProfileDetails();
 
 
-            this.editMode = false; // Postavljamo editMode na false samo ako su sva polja popunjena
+            this.editMode = false;
           } else {
             this.editMode = true;
           }
@@ -96,15 +96,15 @@ export class ProfilePage implements OnInit {
   }
 
   createProfile() {
-    // Provjeri da li već postoji profil s ovim emailom
+
     this.profileService.checkUserByEmail(this.profile.email)
       .subscribe((response: any) => {
         if (response.exists) {
-          // Profil već postoji, ne treba kreirati novi
+
           console.log('Profile already exists');
-          this.editMode = false; // Onemogući editovanje profila jer već postoji
+          this.editMode = false;
         } else {
-          // Profil ne postoji, kreiraj novi
+
           this.profileService.updateProfile(this.profile)
             .subscribe((response: any) => {
               console.log('Profile updated successfully', response);
@@ -146,7 +146,7 @@ export class ProfilePage implements OnInit {
   }
 
   logout() {
-    // Clear profile data
+
     this.profile = {
       address: '',
       city: '',
@@ -157,7 +157,7 @@ export class ProfilePage implements OnInit {
     localStorage.removeItem('userEmail');
     console.log('User email removed from localStorage');
 
-    // Call logout endpoint
+
     this.profileService.logout().subscribe(
       (response: any) => {
         console.log('Logout successful', response);
@@ -170,29 +170,28 @@ export class ProfilePage implements OnInit {
   }
 
   checkout() {
-    // Skupljanje informacija o korisniku i porudžbini
+
     const customer: Customer = {
       name: this.profile.name,
-      surname: '', // Dodajte prezime ako je potrebno
+      surname: '',
       address: this.profile.address,
       phone: this.profile.phone_number,
-      email: this.profile.email // Uključite svojstvo e-pošte
+      email: this.profile.email
     };
 
-    const cartItems: Product[] = []; // Dodajte logiku za skupljanje stavki u korpi
+    const cartItems: Product[] = [];
 
-    const paymentMethod = ''; // Dodajte logiku za odabir načina plaćanja
+    const paymentMethod = '';
 
-    const deliveryDate = ''; // Dodajte logiku za odabir datuma isporuke
+    const deliveryDate = '';
 
-    // Poziv servisa za kreiranje porudžbine
     this.orderService.placeOrder(cartItems, customer, paymentMethod, deliveryDate)
       .subscribe((response: any) => {
         console.log('Order placed successfully', response);
-        // Opciono: Obavestite korisnika o uspešnom naručivanju
+
       }, (error: any) => {
         console.error('Error placing order', error);
-        // Opciono: Obavestite korisnika o grešci prilikom naručivanja
+
       });
   }
 

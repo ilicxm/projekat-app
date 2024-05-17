@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-// @ts-ignore
+
 import { MyCartPageRoutingModule } from './my-cart-routing.module';
 
 import { MyCartPage } from './my-cart. page';

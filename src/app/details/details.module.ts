@@ -6,7 +6,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 import { DetailsPageRoutingModule } from './details-routing.module';
 import { DetailsPage } from './details.page';
 
-import { CakeDetailsComponent } from '../cake-details/cake-details.component'; // Uvezite CakeDetailsComponent ovde
+import { CakeDetailsComponent } from '../cake-details/cake-details.component';
 
 
 @NgModule({

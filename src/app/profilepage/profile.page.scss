@@ -3,13 +3,13 @@
 .profile-picture-frame{
   width: 120px;
   height: 120px;
-  border: 2px solid #ff6600; // Svetlonarandžasta boja
+  border: 2px solid #ff6600;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto; // Centriranje na sredini
+  margin: 0 auto;
 
   img {
     max-width: 100%;
@@ -21,9 +21,9 @@
 
 
 ion-content {
-  --ion-background-color:  #ffddb3; // Bez boje pozadine
-  --ion-color-base: #4d4d4d; // Tamno siva boja teksta
-  --ion-text-color: #ffffff; // Tamno siva boja teksta
+  --ion-background-color:  #ffddb3;
+  --ion-color-base: #4d4d4d;
+  --ion-text-color: #ffffff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --padding-top: 16px;
   --padding-bottom: 16px;
@@ -32,45 +32,45 @@ ion-content {
 }
 
 ion-toolbar ion-title{
-  color: #ffffff; /* Boja teksta */
+  color: #ffffff;
   font-size: 30px;
-  font-weight: bold; /* Debljina fonta */
-  text-align: center; /* Centriranje teksta */
+  font-weight: bold;
+  text-align: center;
 }
 
 ion-item {
-  --background: #ffddb3; /* Postavljanje pozadinske boje item containera */
-  border-radius: 15px; /* Prilagodite vrijednost radi željenog izgleda */
-  color: #6e6868; /* Boja teksta itema */
+  --background: #ffddb3;
+  border-radius: 15px;
+  color: #6e6868;
 
   --inner-border-width: 0;
 }
 
 ion-label {
-  color: #ffffff; // Tamnija boja teksta
+  color: #ffffff;
   font-size: larger;
 }
 
 ion-input {
-  --color: #ff8e38; // Narandžasta boja
+  --color: #ff8e38;
 }
 
 ion-footer.custom-footer {
   ion-toolbar {
-    display: flex; /* Koristimo fleksibilni prikaz za centriranje */
-    justify-content: center; /* Centriranje sadržaja na horizontalnoj osi */
-    align-items: center; /* Centriranje sadržaja na vertikalnoj osi */
-    --background: #ffddb3; // Svetlonarandžasta boja
-    --ion-color-base: #fff; // Bela boja teksta
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --background: #ffddb3;
+    --ion-color-base: #fff;
 
 
     ion-button {
-      margin: auto; /* Centriranje dugmeta */
-      width: 150px; /* Automatska širina dugmeta prema dužini teksta */
-      font-size: 16px; /* Prilagodite veličinu fonta po želji */
-      padding-top: 8px; /* Prilagodite gornji padding po želji */
-      padding-bottom: 8px; /* Prilagodite donji padding po želji */
-      --color: white; /* Boja teksta */
+      margin: auto;
+      width: 150px;
+      font-size: 16px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      --color: white;
     }
   }
 }

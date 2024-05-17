@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
   declarations: [InitialPageComponent],
   imports: [
     CommonModule,
-    IonicModule, // Dodajte IonicModule ovde
+    IonicModule,
     RouterModule.forChild([
       {
         path: '',

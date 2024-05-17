@@ -1,24 +1,24 @@
 ion-content {
-  --background-size: cover !important; /* Opcionalno, da bi slika zauzela cijeli prozor */
-  --padding-top: 0 !important; /* Uklanjamo padding na vrhu */
-  --padding-bottom: 0 !important; /* Uklanjamo padding na dnu */
+  --background-size: cover !important;
+  --padding-top: 0 !important;
+  --padding-bottom: 0 !important;
   --padding-start: 0 !important;
   --padding-end: 0 !important;
-  --ion-background-color: rgb(255, 221, 179); /* Tamnija boja prozora sa providnošću */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Prilagođeni font */
+  --ion-background-color: rgb(255, 221, 179);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 25px;
 }
 
 body {
-  background-color: #1a1a1a !important; /* Postavljanje tamnije boje pozadine */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Prilagođeni font */
+  background-color: #1a1a1a !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .title {
   margin-top: 0;
-  color: #ffffff; /* Bela boja teksta */
-  font-size: 32px; /* Veća veličina fonta */
-  font-weight: bold; /* Podebljan font */
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: bold;
   text-align: center;
   text-decoration-line: underline;
 }
@@ -27,11 +27,11 @@ body {
   margin-left: 0;
   margin-right: 0;
   border-radius: 0;
-  margin-bottom: 16px; /* Dodatni prostor između kartica */
-  color: #ff7409; /* Bela boja teksta */
-  font-size: 18px; /* Veća veličina fonta */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Prilagođeni font */
-  background-color: #ffddb3; /* Boja pozadine kartica */
+  margin-bottom: 16px;
+  color: #ff7409;
+  font-size: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffddb3;
 }
 
 .cart-items ion-card-content {

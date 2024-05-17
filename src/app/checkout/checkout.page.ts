@@ -36,7 +36,7 @@ export class CheckoutPage implements OnInit {
   paymentMethod: string = 'invoice';
   creditCard: CreditCard = { number: '', cvc: '', cardholderName: '', expiryDate: '' };
   deliveryDate: string = new Date().toISOString();
-  userEmail: string = ''; // Dodata promenljiva za email
+  userEmail: string = '';
 
   constructor(
     private router: Router,
@@ -93,7 +93,7 @@ export class CheckoutPage implements OnInit {
         },
         error => {
           console.error('Error placing order', error);
-          // Handle error
+
         }
       );
   }

@@ -43,7 +43,7 @@ ion-content {
 
         p:nth-child(1),
         p:nth-child(2) {
-          color: #ffddb3; /* Promenjena boja teksta za ime, opis i cenu */
+          color: #ffddb3;
         }
 
         p:nth-child(3) {
@@ -59,7 +59,7 @@ ion-content {
           margin-top: 10px;
 
           ion-button {
-            --color: #ffddb3; /* Promenjena boja teksta za dugmad */
+            --color: #ffddb3;
             font-size: 16px;
             margin-left: 8px;
             margin-right: 8px;
@@ -105,7 +105,7 @@ hr {
 
     ion-label:nth-child(1),
     ion-label:nth-child(2) {
-      color: #ffddb3; /* Promenjena boja teksta za ukupnu cenu */
+      color: #ffddb3;
     }
   }
 }

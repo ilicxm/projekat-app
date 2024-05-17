@@ -6,8 +6,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./cake-details.component.scss']
 })
 export class CakeDetailsComponent {
-  @Input() cakeName: string = ''; // Naziv kolača
-  @Input() details: string = ''; // Detalji kolača
+  @Input() cakeName: string = '';
+  @Input() details: string = '';
 
   constructor() { }
 }

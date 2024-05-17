@@ -1,38 +1,38 @@
-/* Stilizacija zaobljenih ivica */
+
 ion-list {
-  border-radius: 0px; /* Prilagodite vrijednost radi željenog izgleda */
-  background-color: #fff3e0; /* Svetla narandžasta boja blizu bele */
+  border-radius: 0px;
+  background-color: #fff3e0;
 
 
 }
 
-/* Stilizacija boje pozadine */
+
 ion-item {
-  --background: #fff3e0; /* Svetla narandžasta boja blizu bele */
+  --background: #fff3e0;
   --inner-border-width: 0;
 
-  font-size: 20px; /* Veličina fonta */
-  color: #bd4224; /* Jarke boje koja se uklapa uz dizajn */
+  font-size: 20px;
+  color: #bd4224;
   text-align: center;
 
   width: auto;
 }
 
 
-/* Stilizacija fonta */
+
 p {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Prilagodite font prema vašim preferencijama */
-  font-size: 16px; /* Prilagodite veličinu fonta prema vašim preferencijama */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
   text-align: center;
 }
 
-/* Stilizacija pozadine popovera */
+
 ion-popover {
-  --background: #fff3e0; /* Svetla narandžasta boja blizu bele */
+  --background: #fff3e0;
   width: 500px;
 }
 
 .popover-details {
-  padding: 16px; /* Dodatni prostor oko teksta */
+  padding: 16px;
 }
 

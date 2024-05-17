@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-// Definisanje interfejsa CartItem
+
 interface Product {
   name: string;
   description: string;
@@ -48,7 +48,7 @@ export class MyCartPage {
     this.router.navigateByUrl('/tabs/tab2');
   }
   navigateToCheckout() {
-    // Navigacija na Checkout stranicu
+
     this.router.navigate(['/checkout'], { queryParams: { cartItems: JSON.stringify(this.cartItems) } });
   }
   getTotalPrice(): number {

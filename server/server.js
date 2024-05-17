@@ -7,7 +7,6 @@ const path = require('path');
 
 const app = express();
 
-// Session middleware
 app.use(session({
   secret: 'secret-key',
   resave: false,
@@ -16,7 +15,6 @@ app.use(session({
 
 const port = 3000;
 
-// MySQL connection
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -32,11 +30,10 @@ app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
 
-// Serve static files
 const staticPath = path.join(__dirname, 'www');
 app.use(express.static(staticPath));
 
-// Signup endpoint
+
 app.post('/register', (req, res) => {
   const { name, email, password } = req.body;
   const userQuery = `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`;
@@ -61,7 +58,7 @@ app.post('/register', (req, res) => {
   });
 });
 
-// Login endpoint
+
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -76,7 +73,7 @@ app.post('/login', (req, res) => {
     }
 
     if (userResults.length > 0) {
-      // User found
+
       const user = userResults[0];
 
       connection.query(userProfileQuery, [email], (error, profileResults, fields) => {
@@ -87,17 +84,14 @@ app.post('/login', (req, res) => {
         }
 
         if (profileResults.length > 0) {
-          // Profile exists
+
           const userProfile = profileResults[0];
           const userData = { email: email, name: user.name, profile: userProfile };
 
-          // Send user email back to client
           const userEmail = email;
 
-          // Send existing profile data and user email to the client
           res.status(200).json({ message: 'Login successful', userEmail: userEmail, user: userData });
         } else {
-          // Profile doesn't exist, create it
           const userProfileData = { email: email, name: user.name };
           connection.query('INSERT INTO profiles SET ?', userProfileData, (error, insertResult, fields) => {
             if (error) {
@@ -107,7 +101,6 @@ app.post('/login', (req, res) => {
             }
             const userData = { email: email, name: user.name, profile: userProfileData };
 
-            // Send user email back to client
             const userEmail = email;
 
             res.status(200).json({ message: 'Login successful', userEmail: userEmail, user: userData });
@@ -120,7 +113,6 @@ app.post('/login', (req, res) => {
   });
 });
 
-// Update profile endpoint
 app.put('/profile', (req, res) => {
   const email = req.session.email; // Use email from the current session
   if (!email) {
@@ -145,47 +137,13 @@ app.put('/profile', (req, res) => {
   });
 });
 
-// Checkout endpoint
-// app.post('/checkout', (req, res) => {
-//   const { cartItems, customer, paymentMethod, deliveryDate } = req.body;
-//   const email = req.session.email; // Učitavanje e-pošte iz sesije
-//
-//   // Constructing the description of items in the order
-//   const description = cartItems.map(item => `${item.name} (${item.quantity})`).join(', ');
-//
-//   const order = {
-//     description,
-//     name: customer.name,
-//     surname: customer.surname,
-//     address: customer.address,
-//     phone_number: customer.phone,
-//     date_of_delivery: new Date(deliveryDate),
-//     payment_method: paymentMethod,
-//     email: email // Dodavanje e-pošte u objekat narudžbine
-//   };
-//
-//   const query = `INSERT INTO orders (description, name, surname, address, phone_number, date_of_delivery, payment_method, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-//
-//   connection.query(query, [order.description, order.name, order.surname, order.address, order.phone_number, order.date_of_delivery, order.payment_method, order.email], (error, results, fields) => {
-//     if (error) {
-//       console.error(error);
-//       res.status(500).json({ error: 'Internal server error' });
-//       return;
-//     }
-//     res.status(200).json({ message: 'Order placed successfully' });
-//   });
-// });
 
-
-
-// Route to check if user profile exists by email
 app.post('/checkUserByEmail', (req, res) => {
   const { email } = req.body;
 
-  // Query to check if a user exists with the provided email
   const checkUserQuery = `SELECT * FROM users WHERE email = ?`;
 
-  // Execute the query
+
   connection.query(checkUserQuery, [email], (error, results, fields) => {
     if (error) {
       console.error('Error checking user:', error);
@@ -193,7 +151,6 @@ app.post('/checkUserByEmail', (req, res) => {
       return;
     }
 
-    // If there are results, user exists; otherwise, it doesn't
     if (results.length > 0) {
       res.status(200).json({ exists: true });
     } else {
@@ -202,23 +159,20 @@ app.post('/checkUserByEmail', (req, res) => {
   });
 });
 
-// Route to update user profile
 app.put('/updateProfile', (req, res) => {
   const { email, address, city, postal_code, phone_number } = req.body;
 
-  // Check if all required fields are provided
   if (!email || !address || !city || !postal_code || !phone_number) {
     res.status(400).json({ error: 'All fields are required' });
     return;
   }
 
-  // Update query
   const updateProfileQuery = `
     UPDATE profiles
     SET address = ?, city = ?, postal_code = ?, phone_number = ?
     WHERE email = ?`;
 
-  // Execute the query
+
   connection.query(updateProfileQuery, [address, city, postal_code, phone_number, email], (error, results, fields) => {
     if (error) {
       console.error('Error updating profile:', error);
@@ -226,7 +180,7 @@ app.put('/updateProfile', (req, res) => {
       return;
     }
 
-    // Check if any rows were affected
+
     if (results.affectedRows === 0) {
       res.status(404).json({ error: 'Profile not found for the provided email' });
       return;
@@ -236,9 +190,9 @@ app.put('/updateProfile', (req, res) => {
   });
 });
 
-// Logout endpoint
+
 app.post('/logout', (req, res) => {
-  // Destroy the session
+
   req.session.destroy((error) => {
     if (error) {
       console.error('Error logging out:', error);
@@ -249,14 +203,14 @@ app.post('/logout', (req, res) => {
   });
 });
 
-// Route to check if profile fields are filled
+
 app.post('/checkProfileFields', (req, res) => {
   const { email } = req.body;
 
-  // Query to check if a profile exists with the provided email
+
   const checkProfileQuery = `SELECT * FROM profiles WHERE email = ?`;
 console.log(email);
-  // Execute the query
+
   connection.query(checkProfileQuery, [email], (error, results, fields) => {
     if (error) {
       console.error('Error checking user profile:', error);
@@ -264,10 +218,10 @@ console.log(email);
       return;
     }
 
-    // If there are results, profile exists; otherwise, it doesn't
+
     if (results.length > 0) {
       const profile = results[0];
-      // Check if all required fields are filled
+
       const allFieldsFilled = profile.address !== null && profile.city !== null && profile.postal_code !== null && profile.phone_number !== null;
       res.status(200).json({ exists: true, profile, allFieldsFilled });
     } else {
@@ -276,23 +230,18 @@ console.log(email);
   });
 });
 
-// Route to get orders by email
-// Checkout endpoint
-// Checkout endpoint
-// Checkout endpoint
-// Checkout endpoint
-// Checkout endpoint
+
 app.post('/checkout', (req, res) => {
   const { cartItems, customer, paymentMethod, deliveryDate, userEmail } = req.body;
 
-  const email = userEmail; // Koristi email prosleđen u zahtevu
+  const email = userEmail;
   console.log('Email za order', email);
   if (!email) {
-    // Ako nije pružena e-pošta, vrati grešku
+
     return res.status(400).json({ error: 'User email is required' });
   }
 
-  // Konstruisanje opisa stavki u porudžbini
+
   const description = cartItems.map(item => `${item.name} (${item.quantity})`).join(', ');
 
   const order = {
@@ -303,7 +252,7 @@ app.post('/checkout', (req, res) => {
     phone_number: customer.phone,
     date_of_delivery: new Date(deliveryDate),
     payment_method: paymentMethod,
-    email: email // Dodavanje e-pošte u objekat narudžbine
+    email: email
   };
 
   const query = `INSERT INTO orders (description, name, surname, address, phone_number, date_of_delivery, payment_method, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -317,10 +266,9 @@ app.post('/checkout', (req, res) => {
   });
 });
 
-// Route to get orders by email
 app.get('/orders/:email', (req, res) => {
   const email = req.params.email; // Koristi email adresu iz URL parametra
-  // Use the email parameter from the request
+
   const query = `SELECT * FROM orders WHERE email = ?`;
 
   connection.query(query, [email], (error, results, fields) => {
@@ -331,14 +279,14 @@ app.get('/orders/:email', (req, res) => {
     res.status(200).json(results);
   });
 });
-// Route to get profile details by email
+
 app.post('/getProfileDetails', (req, res) => {
   const { email } = req.body;
 
-  // Query to get profile details by email
+
   const getProfileDetailsQuery = `SELECT * FROM profiles WHERE email = ?`;
 
-  // Execute the query
+
   connection.query(getProfileDetailsQuery, [email], (error, results, fields) => {
     if (error) {
       console.error('Error getting profile details:', error);
@@ -346,7 +294,7 @@ app.post('/getProfileDetails', (req, res) => {
       return;
     }
 
-    // If profile exists, send profile details to client
+
     if (results.length > 0) {
       const profileDetails = results[0];
       res.status(200).json({ message: 'Profile details retrieved successfully', profile: profileDetails });

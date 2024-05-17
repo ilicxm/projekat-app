@@ -3,18 +3,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
 }
 
 .login-heading {
-  font-size: 2rem; /* Adjust size as needed */
-  color: white; /* Change color to white */
-  margin-bottom: 20px; /* Adjust spacing as needed */
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 20px;
 }
 
 .form-container {
   width: 100%;
-  max-width: 300px; /* Adjust as needed */
+  max-width: 300px;
 }
 
 .form-container ion-item {
@@ -31,9 +31,9 @@
 }
 
 .form-container ion-button {
-  margin-top: 24px; /* Adjust as needed */
+  margin-top: 24px;
 }
 
 .sign-up {
-  margin-top: 24px; /* Adjust as needed */
+  margin-top: 24px;
 }
