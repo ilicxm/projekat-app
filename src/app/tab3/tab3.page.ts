@@ -15,10 +15,10 @@ export class Tab3Page {
   constructor() {}
 
   ngAfterViewInit() {
-    this.observeParagraph(this.paragraph1.nativeElement, 1000); // Prikazuje se prvi pasus nakon 1 sekunde
-    this.observeParagraph(this.paragraph2.nativeElement, 2000); // Prikazuje se drugi pasus nakon 2 sekunde
-    this.observeParagraph(this.paragraph3.nativeElement, 3000); // Prikazuje se treći pasus nakon 3 sekunde
-    this.observeParagraph(this.paragraph4.nativeElement, 4000); // Prikazuje se četvrti pasus nakon 4 sekunde
+    this.observeParagraph(this.paragraph1.nativeElement, 1000);
+    this.observeParagraph(this.paragraph2.nativeElement, 2000);
+    this.observeParagraph(this.paragraph3.nativeElement, 3000);
+    this.observeParagraph(this.paragraph4.nativeElement, 4000);
   }
 
   observeParagraph(paragraph: HTMLElement, delay: number) {
@@ -45,7 +45,7 @@ export class Tab3Page {
       } else {
         clearInterval(interval);
       }
-    }, 100); // Interval za postepeno pojavljivanje teksta
+    }, 100);
   }
 }
 

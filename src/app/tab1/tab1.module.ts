@@ -1,4 +1,4 @@
-// U src/app/tab1/tab1.module.ts
+
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';

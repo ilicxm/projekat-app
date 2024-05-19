@@ -1,15 +1,15 @@
-// checkout.service.ts
+
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Product, Customer } from '../checkout/checkout.page'; // Adjust the path if needed
+import { Product, Customer } from '../checkout/checkout.page';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  private baseUrl = 'http://localhost:3000'; // Server URL
+  private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
 
@@ -19,7 +19,7 @@ export class OrderService {
       customer,
       paymentMethod,
       deliveryDate,
-      userEmail // Dodajemo userEmail kao deo podataka o narudžbini
+      userEmail
     };
     return this.http.post(`${this.baseUrl}/checkout`, orderData);
   }

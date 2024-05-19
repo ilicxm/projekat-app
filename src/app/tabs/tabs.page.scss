@@ -1,33 +1,33 @@
-// Define custom variables
-$tab-icon-size: 20px; // Customize the size of the icons as needed
+
+$tab-icon-size: 20px;
 
 ion-tabs {
 
 
   ion-tab-bar {
 
-    box-shadow: none; // Remove default shadow
+    box-shadow: none;
 
     ion-tab-button {
       ion-icon {
         font-size: 22px;
         color: #ffddb3;
-        --ionicon-stroke-width: 0.5px; // Adjust icon stroke width
+        --ionicon-stroke-width: 0.5px;
       }
 
       ion-label {
         display: block;
         text-align: center;
-        font-size: 12px; // Adjust label font size if needed
-        color: #ffffff; // Text color for labels
+        font-size: 12px;
+        color: #ffffff;
       }
 
-      // Add circular background to icons
+
       &.tab-selected ion-icon {
         background-color: white;
         border-radius: 50%;
-        padding: 5px; // Adjust as needed
-        color: #ff8b38; // Icon color for selected tab
+        padding: 5px;
+        color: #ff8b38;
       }
     }
   }

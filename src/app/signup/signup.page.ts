@@ -18,8 +18,8 @@ export class SignupPage {
       .subscribe((response: any) => {
         console.log('Response from server:', response);
         if (response && response.message === 'User registered successfully') {
-          // Ako je registracija uspešna, preusmeri korisnika na login stranicu
-          this.router.navigate(['/login']); // Dodato preusmeravanje
+
+          this.router.navigate(['/login']);
         }
       });
   }

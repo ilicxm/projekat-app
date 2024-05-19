@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000'; // Adjust URL as needed
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-// Definisanje interfejsa CartItem
+
 interface Product {
   name: string;
   description: string;
@@ -19,8 +19,8 @@ export class Tab2Page {
 
   showNotificationPopup = false;
 
-  products: Product[] = []; // Array to hold all products
-  filteredProducts: Product[] = []; // Array to hold filtered products
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
   cartItems: Product[] = [];
 
   constructor(private router: Router) {
@@ -88,13 +88,13 @@ export class Tab2Page {
     this.filteredProducts = this.products;
   }
   filterProducts(searchTerm: string) {
-    // If search term is empty, display all products
+
     if (!searchTerm.trim()) {
       this.filteredProducts = this.products;
       return;
     }
 
-    // Filter products based on search term
+
     this.filteredProducts = this.products.filter(product =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -107,7 +107,7 @@ export class Tab2Page {
     this.showNotificationPopup = true;
     setTimeout(() => {
       this.showNotificationPopup = false;
-    }, 3000); // Prikazuje se 3 sekunde, nakon toga nestaje
+    }, 3000);
   }
 
 
